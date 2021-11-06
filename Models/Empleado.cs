@@ -9,6 +9,7 @@ namespace GYMIMFC.Models
     public class Empleado
     {
         [Key]
+        public virtual string NombreEmpleado { get; set; }
         public virtual short idEmpleado { get; set; }
 
         public virtual string Puesto { get; set; }
