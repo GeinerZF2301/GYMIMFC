@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GYMIMFC.Data.Migrations
+namespace GYMIMFC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -30,6 +30,7 @@ namespace GYMIMFC.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("idCategoria");
@@ -144,9 +145,6 @@ namespace GYMIMFC.Data.Migrations
                         .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short?>("CategoriaidCategoria")
-                        .HasColumnType("smallint");
-
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
@@ -158,7 +156,7 @@ namespace GYMIMFC.Data.Migrations
 
                     b.HasKey("idServicio");
 
-                    b.HasIndex("CategoriaidCategoria");
+                    b.HasIndex("idCategoria");
 
                     b.ToTable("Servicios");
                 });
@@ -388,7 +386,9 @@ namespace GYMIMFC.Data.Migrations
                 {
                     b.HasOne("GYMIMFC.Models.Categoria", "Categoria")
                         .WithMany("Servicios")
-                        .HasForeignKey("CategoriaidCategoria");
+                        .HasForeignKey("idCategoria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
                 });

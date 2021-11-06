@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GYMIMFC.Data.Migrations
+namespace GYMIMFC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211014055356_migration")]
-    partial class migration
+    [Migration("20211105054325_GYM")]
+    partial class GYM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,7 @@ namespace GYMIMFC.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("idCategoria");
@@ -146,9 +147,6 @@ namespace GYMIMFC.Data.Migrations
                         .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short?>("CategoriaidCategoria")
-                        .HasColumnType("smallint");
-
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
@@ -160,7 +158,7 @@ namespace GYMIMFC.Data.Migrations
 
                     b.HasKey("idServicio");
 
-                    b.HasIndex("CategoriaidCategoria");
+                    b.HasIndex("idCategoria");
 
                     b.ToTable("Servicios");
                 });
@@ -390,7 +388,9 @@ namespace GYMIMFC.Data.Migrations
                 {
                     b.HasOne("GYMIMFC.Models.Categoria", "Categoria")
                         .WithMany("Servicios")
-                        .HasForeignKey("CategoriaidCategoria");
+                        .HasForeignKey("idCategoria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
                 });
