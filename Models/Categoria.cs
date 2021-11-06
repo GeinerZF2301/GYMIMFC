@@ -13,7 +13,7 @@ namespace GYMIMFC.Models
         public virtual short idCategoria { get; set; }
         [Display(Name = "Nombre: ")]
         [Required]
-        public virtual string Nombre { get; set; }
+        public virtual string NombreCategoria { get; set; }
 
         public virtual string Descripcion { get; set; }
 
