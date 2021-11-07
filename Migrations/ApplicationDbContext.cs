@@ -6,7 +6,8 @@ using System.Text;
 using GYMIMFC.Models;
 
 
-namespace GYMIMFC.Data
+namespace GYMIMFC.Migrations
+
 {
     public class ApplicationDbContext : IdentityDbContext
     {

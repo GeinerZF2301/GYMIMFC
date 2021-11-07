@@ -1,4 +1,4 @@
-﻿using GYMIMFC.Data;
+﻿using GYMIMFC.Migrations;
 using GYMIMFC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
