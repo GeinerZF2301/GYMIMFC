@@ -13,7 +13,7 @@ namespace GYMIMFC.Models
 
         public virtual short idServicio { get; set; }
 
-        public virtual string Nombre { get; set; }
+        public virtual string NombreServicio { get; set; }
 
         public virtual string NumeroMatricula { get; set; }
 
