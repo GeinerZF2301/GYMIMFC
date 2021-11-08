@@ -1,5 +1,5 @@
 ﻿using GYMIMFC.Models;
-using GYMIMFC.Data;
+using GYMIMFC.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -169,7 +169,7 @@ namespace GYMIMFC.Controllers
         public FileResult exportarPDF(List<Categoria> lista)
         {
             lista = listaCategoria;
-           Utilitarios util = new Utilitarios();
+            Utilitarios util = new Utilitarios();
             string[] cabeceras = { "Id Especialidad", "Nombre", "Descripcion" };
             string[] nombrePropiedades = { "EspecialidadId", "Nombre", "Descripcion" };
             string titulo = "Reporte de Especialidades";

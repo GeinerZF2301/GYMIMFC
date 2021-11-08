@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GYMIMFC.Migrations
 {
-    public partial class GYM : Migration
+    public partial class migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace GYMIMFC.Migrations
                 {
                     idCategoria = table.Column<short>(type: "smallint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NombreCategoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -85,17 +85,17 @@ namespace GYMIMFC.Migrations
                 name: "Empleado",
                 columns: table => new
                 {
-                    idEmpleado = table.Column<short>(type: "smallint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Puesto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ZonaPuesto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NombreEmpleado = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    idEmpleado = table.Column<short>(type: "smallint", nullable: false),
+                    Puesto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZonaPuesto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaIngreso = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TiempoContrato = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Cedula = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Cedula = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Empleado", x => x.idEmpleado);
+                    table.PrimaryKey("PK_Empleado", x => x.NombreEmpleado);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,7 +210,7 @@ namespace GYMIMFC.Migrations
                 {
                     idServicio = table.Column<short>(type: "smallint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NombreServicio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumeroMatricula = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     idCategoria = table.Column<short>(type: "smallint", nullable: false)
                 },
@@ -234,7 +234,7 @@ namespace GYMIMFC.Migrations
                     idEmpleado = table.Column<short>(type: "smallint", nullable: false),
                     idServicio = table.Column<short>(type: "smallint", nullable: false),
                     ClienteidCliente = table.Column<short>(type: "smallint", nullable: true),
-                    EmpleadoidEmpleado = table.Column<short>(type: "smallint", nullable: true),
+                    EmpleadoNombreEmpleado = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ServiciosidServicio = table.Column<short>(type: "smallint", nullable: true)
                 },
                 constraints: table =>
@@ -247,10 +247,10 @@ namespace GYMIMFC.Migrations
                         principalColumn: "idCliente",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Matricula_Empleado_EmpleadoidEmpleado",
-                        column: x => x.EmpleadoidEmpleado,
+                        name: "FK_Matricula_Empleado_EmpleadoNombreEmpleado",
+                        column: x => x.EmpleadoNombreEmpleado,
                         principalTable: "Empleado",
-                        principalColumn: "idEmpleado",
+                        principalColumn: "NombreEmpleado",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matricula_Servicios_ServiciosidServicio",
@@ -305,9 +305,9 @@ namespace GYMIMFC.Migrations
                 column: "ClienteidCliente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matricula_EmpleadoidEmpleado",
+                name: "IX_Matricula_EmpleadoNombreEmpleado",
                 table: "Matricula",
-                column: "EmpleadoidEmpleado");
+                column: "EmpleadoNombreEmpleado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Matricula_ServiciosidServicio",
