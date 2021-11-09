@@ -1,5 +1,5 @@
 ﻿using GYMIMFC.Models;
-using GYMIMFC.Data;
+using GYMIMFC.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

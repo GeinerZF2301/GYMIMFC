@@ -1,4 +1,4 @@
-using GYMIMFC.Data;
+using GYMIMFC.Migrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
