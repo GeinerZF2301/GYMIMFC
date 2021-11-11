@@ -22,6 +22,8 @@ namespace GYMIMFC.Data
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<TipoUsuario> TipoUsuario { get; set; }
+        public DbSet<TipoUsuarioPagina> TipoUsuarioPagina { get; set; }
+
     }
 
 }
