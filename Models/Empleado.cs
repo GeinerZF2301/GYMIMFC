@@ -13,10 +13,12 @@ namespace GYMIMFC.Models
         [Required(ErrorMessage = "Debe digitar el nombre el nombre del empleado")]
         [Display(Name = "Nombre:")]
         public virtual string NombreEmpleado { get; set; }
+        [Required(ErrorMessage = "Por favor incluya los apellidos del empleado")]
+        public virtual string Apellidos { get; set; }
 
         [Required(ErrorMessage = "Debe digitar el ID del empleado")]
         [Display(Name = "Empleado ID:")]
-        public virtual short idEmpleado { get; set; }
+        public virtual string idEmpleado { get; set; }
 
         [Required(ErrorMessage = "Debe digitar el puesto del empleado")]
         [Display(Name = "Puesto:")]
@@ -37,7 +39,8 @@ namespace GYMIMFC.Models
         [Required(ErrorMessage = "Debe digitar la cédula del empleado")]
         [Display(Name = "Cédula:")]
         public virtual string Cedula { get; set; }
-
+        public virtual int CategoriaId { get; set; }
+        public virtual Categoria Categoria { get; set; }
         public virtual IList<Matricula> Matriculas { get; set; }
     }
 }

@@ -7,29 +7,45 @@ using System.Threading.Tasks;
 
 namespace GYMIMFC.Models
 {
-    public class Citas{
+    public partial class Cita
+    {
 
         [Display(Name = "Cita ID")]
+        [MaxLength(50)]
+        public int citaId { get; set; }
 
-        public int CitaId { get; set; }
+        [MaxLength(100)]
         [Display(Name = "Cliente ID")]
-        public string PacienteId { get; set; }
+        public int clienteId { get; set; }
+
         [Display(Name = "Cliente")]
-        public string Nombre { get; set; }
-        public string idEmpleado { get; set; }
+        [Required(ErrorMessage = "Debe digitar el nombre del Cliente")]
+        [StringLength(50)]
+        public string nombreCliente { get; set; }
+
+        [Display(Name = "ID Instructor")]
+        [MaxLength(50)]
+        public int idEmpleado { get; set; }
+
         [Display(Name = "Instructor")]
-        public string NombreEmpleado { get; set; }
+        [Required(ErrorMessage = "Debe digitar el nombre del Instructor")]
+        [StringLength(50)]
+        public string nombreEmpleado { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-       // [Display(Name = "Fecha cita")]
+        [Required(ErrorMessage = "Por favor, inserte fecha")]
         public DateTime FechaCita { get; set; }
-        public string idCategoria { get; set; }
+
+        [Display(Name = "ID Categoria Servicio")]
+        [MaxLength(50)]
+        public int idCategoria { get; set; }
+        [Display(Name = "ID Servicio")]
+        [MaxLength(50)]
         public int idServicio { get; set; }
         [Display(Name = "Servicio")]
-        public string NombreServicio { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar el nombre del Servicio")]
+        public string nombreServicio { get; set; }
         public int SelectedOption { get; set; }
         public IEnumerable<SelectListItem> Lista { get; set; }
     }
 }
-

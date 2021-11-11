@@ -21,9 +21,9 @@ namespace GYMIMFC.Migrations
 
             modelBuilder.Entity("GYMIMFC.Models.Categoria", b =>
                 {
-                    b.Property<short>("idCategoria")
+                    b.Property<int>("idCategoria")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Descripcion")
@@ -40,22 +40,21 @@ namespace GYMIMFC.Migrations
 
             modelBuilder.Entity("GYMIMFC.Models.Cliente", b =>
                 {
-                    b.Property<short>("idCliente")
+                    b.Property<int>("idCliente")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("Altura")
                         .HasColumnType("float");
 
                     b.Property<string>("Cedula")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<short>("Edad")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Edad")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaPagoMatricula")
                         .HasColumnType("datetime2");
@@ -63,14 +62,20 @@ namespace GYMIMFC.Migrations
                     b.Property<double>("IMC")
                         .HasColumnType("float");
 
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
                     b.Property<string>("PlanEntrenamiento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("fechaNacimiento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("nombreCliente")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("idCliente");
 
@@ -113,22 +118,25 @@ namespace GYMIMFC.Migrations
                     b.Property<DateTime>("Horario")
                         .HasColumnType("datetime2");
 
-                    b.Property<short?>("ClienteidCliente")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("ClienteidCliente")
+                        .HasColumnType("int");
 
                     b.Property<string>("EmpleadoNombreEmpleado")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<short?>("ServiciosidServicio")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("ServiciosidServicio")
+                        .HasColumnType("int");
 
                     b.Property<short>("idCliente")
+                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.Property<short>("idEmpleado")
+                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.Property<short>("idServicio")
+                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.HasKey("Horario");
@@ -144,19 +152,23 @@ namespace GYMIMFC.Migrations
 
             modelBuilder.Entity("GYMIMFC.Models.Servicios", b =>
                 {
-                    b.Property<short>("idServicio")
+                    b.Property<int>("idServicio")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("NombreServicio")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("idCategoria")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
 
-                    b.Property<string>("NumeroMatricula")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("nombreServicio")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<short>("idCategoria")
-                        .HasColumnType("smallint");
+                    b.Property<string>("numeroMatricula")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("idServicio");
 
