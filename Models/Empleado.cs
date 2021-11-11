@@ -41,6 +41,6 @@ namespace GYMIMFC.Models
         public virtual string Cedula { get; set; }
         public virtual int CategoriaId { get; set; }
         public virtual Categoria Categoria { get; set; }
-        public virtual IList<Matricula> Matriculas { get; set; }
+        public virtual IList<Cita> Citas { get; set; }
     }
 }
