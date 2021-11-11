@@ -40,7 +40,7 @@ namespace GYMIMFC.Models
                 using (var pdfDoc = new PdfDocument(writer))
                 {
                     Document doc = new Document(pdfDoc);
-                    Text Texto = new Text("Clínica ACME")
+                    Text Texto = new Text("GYM IMFC")
                     .SetFontColor(ColorConstants.RED)
                     .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA));
                     Paragraph p0 = new Paragraph(Texto);
@@ -49,9 +49,9 @@ namespace GYMIMFC.Models
                     Paragraph p1 = new Paragraph(titulo);
                     p1.SetFontSize(20);
                     p1.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                    Image img =
-    new Image(ImageDataFactory.Create(@"D:\Cursos UNA\2021\II Semestre\Programacion III\Clinica\Clinica\wwwroot\imagenes\clinica.jfif"))
-                   .SetTextAlignment(TextAlignment.LEFT);
+                    //                Image img = 
+                    //new Image(ImageDataFactory.Create(@"D:\Cursos UNA\2021\II Semestre\Programacion III\Clinica\Clinica\wwwroot\imagenes\clinica.jfif"))
+                    //               .SetTextAlignment(TextAlignment.LEFT);
 
                     //doc.Add(img);
                     doc.Add(p1);
@@ -116,13 +116,13 @@ namespace GYMIMFC.Models
                 }
             }
         }
-        public static string cifrarDatos(string data)
-        {
-            SHA256Managed sha = new SHA256Managed();
-            byte[] dataSinCifrar = Encoding.Default.GetBytes(data);
-            byte[] dataCifrada = sha.ComputeHash(dataSinCifrar);
-            return BitConverter.ToString(dataCifrada).Replace("-", "");
-        }
+        //public static string cifrarDatos(string data)
+        //{
+        //    SHA256Managed sha = new SHA256Managed();
+        //    byte[] dataSinCifrar = Encoding.Default.GetBytes(data);
+        //    byte[] dataCifrada = sha.ComputeHash(dataSinCifrar);
+        //    return BitConverter.ToString(dataCifrada).Replace("-", "");
+        //}
         static string Key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
         public static string CifrarDatos(string data)
         {
@@ -164,16 +164,16 @@ namespace GYMIMFC.Models
                 }
             }
         }
-        /*public static List<Pagina> ListarBotonesDatos(string nomcontroller)
-        {
-            List<Pagina> listapag = new List<Pagina>();
-            listapag = Utilitarios.listaBotonesPagina
-                .Where(p => p.Controlador.ToUpper() == nomcontroller.ToUpper()).ToList();
-            return listapag;
-        }
+        //public static List<Pagina> ListarBotonesDatos(string nomcontroller)
+        //{
+        //    List<Pagina> listapag = new List<Pagina>();
+        //    listapag = Utilitarios.listaBotonesPagina
+        //        .Where(p => p.Controlador.ToUpper() == nomcontroller.ToUpper()).ToList();
+        //    return listapag;
+        //}
 
-        public static List<Pagina> listaPagina;
-        public static List<Pagina> listaBotonesPagina;*/
+        //public static List<Pagina> listaPagina;
+        //public static List<Pagina> listaBotonesPagina;
 
         public static List<string> ListaController { get; set; } = new List<string>();
         public static List<string> ListaMenu { get; set; } = new List<string>();
@@ -182,4 +182,5 @@ namespace GYMIMFC.Models
         public static string MenuCons;
         public static string MenuAcce;
     }
+
 }

@@ -5,14 +5,16 @@ using GYMIMFC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GYMIMFC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211108040938_migration")]
+    partial class migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,9 +24,9 @@ namespace GYMIMFC.Migrations
 
             modelBuilder.Entity("GYMIMFC.Models.Categoria", b =>
                 {
-                    b.Property<int>("idCategoria")
+                    b.Property<short>("idCategoria")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Descripcion")
@@ -41,21 +43,22 @@ namespace GYMIMFC.Migrations
 
             modelBuilder.Entity("GYMIMFC.Models.Cliente", b =>
                 {
-                    b.Property<int>("idCliente")
+                    b.Property<short>("idCliente")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("Altura")
                         .HasColumnType("float");
 
                     b.Property<string>("Cedula")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Edad")
-                        .HasColumnType("int");
+                    b.Property<short>("Edad")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FechaPagoMatricula")
                         .HasColumnType("datetime2");
@@ -63,20 +66,14 @@ namespace GYMIMFC.Migrations
                     b.Property<double>("IMC")
                         .HasColumnType("float");
 
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
                     b.Property<string>("PlanEntrenamiento")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("fechaNacimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("nombreCliente")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("idCliente");
 
@@ -119,25 +116,22 @@ namespace GYMIMFC.Migrations
                     b.Property<DateTime>("Horario")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ClienteidCliente")
-                        .HasColumnType("int");
+                    b.Property<short?>("ClienteidCliente")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("EmpleadoNombreEmpleado")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ServiciosidServicio")
-                        .HasColumnType("int");
+                    b.Property<short?>("ServiciosidServicio")
+                        .HasColumnType("smallint");
 
                     b.Property<short>("idCliente")
-                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.Property<short>("idEmpleado")
-                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.Property<short>("idServicio")
-                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.HasKey("Horario");
@@ -153,23 +147,19 @@ namespace GYMIMFC.Migrations
 
             modelBuilder.Entity("GYMIMFC.Models.Servicios", b =>
                 {
-                    b.Property<int>("idServicio")
+                    b.Property<short>("idServicio")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("idCategoria")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+                    b.Property<string>("NombreServicio")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("nombreServicio")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("NumeroMatricula")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("numeroMatricula")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<short>("idCategoria")
+                        .HasColumnType("smallint");
 
                     b.HasKey("idServicio");
 
