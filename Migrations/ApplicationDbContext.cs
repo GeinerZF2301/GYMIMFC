@@ -9,7 +9,7 @@ using GYMIMFC.Models;
 namespace GYMIMFC.Migrations
 {
     public class ApplicationDbContext : IdentityDbContext
-    {
+    { 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -19,7 +19,8 @@ namespace GYMIMFC.Migrations
         public DbSet<Empleado> Empleado { get; set; }
         public DbSet<Servicios> Servicios { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
-        public DbSet<Cita> Citas { get; set; }
+        public DbSet<Cita> Cita { get; set; }
+       
     }
-
+    
 }

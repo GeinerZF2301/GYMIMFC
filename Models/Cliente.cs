@@ -10,43 +10,50 @@ namespace GYMIMFC.Models
     {
     [Key]
     [Display(Name = "ID Ciente ")]
-    [MaxLength(50)]
-    public virtual string idCliente { get; set; }
+    [MaxLength(100)]
+    public string ClienteId { get; set; }
     [Display(Name = "Nombre del Cliente")]
     [StringLength(50)]
     [Required(ErrorMessage = "Debe ingresar el nombre del cliente")]
-    public virtual string nombreCliente { get; set; }
+    public string nombreCliente { get; set; }
     [Display(Name = "Fecha de nacimiento")]
-    [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
-    [Required(ErrorMessage = "Por favor incluya los apellidos del paciente")]
-    public virtual string Apellidos { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Por favor incluya los apellidos del paciente")]
+        public string Apellidos { get; set; } 
     public virtual DateTime fechaNacimiento { get; set; }
     [Display(Name = "Registre su peso")]
     [Required(ErrorMessage = "Debe registrar su peso")]
 
-    public virtual double Peso { get; set; }
+    public double Peso { get; set; }
     [Display(Name = "Registre su IMC")]
     [Required(ErrorMessage = "Debe registrar su IMC")]
-    public virtual double IMC { get; set; }
+    public double IMC { get; set; }
     [Display(Name = "Registre su altura")]
     [Required(ErrorMessage = "Debe registrar su altura")]
-    public virtual double Altura { get; set; }
+    public double Altura { get; set; }
     [Display(Name = "Edad")]
     [Required(ErrorMessage = "Debe registrar su edad")]
     [Range(0,99)]
-    public virtual int Edad { get; set; }
-    [Display(Name = "Fecha en que pagó la matrícula")]
-    [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
-    [Required(ErrorMessage = "Registre la fecha en el cual efectuó su matrícula")]
-    public virtual DateTime FechaPagoMatricula { get; set; }
-    [Display(Name = "Plan de entrenamiento")]
-    [Required(ErrorMessage = "Debe describir su plan de entrenamiento")]
-    public virtual string PlanEntrenamiento { get; set; }
+    public int Edad { get; set; }
+    [Display(Name = "Direccion")]
+    [Required(ErrorMessage = "Por favor incluya la dirección del paciente")]
+    public string Direccion { get; set; }
     [Display(Name = "Cédula del Cliente")]
     [Required(ErrorMessage = "Debe registrar su cédula")]
-     public virtual string Cedula { get; set; }
+    public string Cedula { get; set; }
+    
+    [Required(ErrorMessage = "Por favor incluya una dirección de correo electrónico")]
+    [DataType(DataType.EmailAddress)]
+    [Display(Name = "Email")]
+    [MaxLength(50)]
+    [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}",
+    ErrorMessage = "Ingrese una dirección de correo válida")]
+    public string Email { get; set; }
+    public bool? Foto { get; set; }
+    public virtual ICollection<Cita> Cita { get; set; }
+    
 
-    public virtual IList<Cita> Citas{ get; set; }
+  
 
     }
 }

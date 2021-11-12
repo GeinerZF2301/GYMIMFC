@@ -6,10 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GYMIMFC.Models
 {
-    public class Categoria
+    public partial class Categoria
     {
         [Key]
-
         public virtual int idCategoria { get; set; }
         [Display(Name = "Nombre: ")]
         [Required]

@@ -1,0 +1,199 @@
+﻿   Main Sidebar Container 
+@*{
+    var Usuario = ViewBag.UsuarioId;
+    var Perfil = ViewBag.Perfil;
+}*@
+<!--aside class="main-sidebar sidebar-dark-cyan elevation-4"-->
+    <!-- Brand Logo 
+    <a href="index3.html" class="brand-link">
+        <img src="~/adminlte/dist/img/Logo (2).png" alt=" "
+             class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-bolder">Clinica ACME</span>
+    </a>
+     Sidebar Menu 
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
+            role="menu" data-accordion="true">
+
+            tipoUsuarioId = 1=Admin 2=Registrador 3=Citas 4=Consultas
+           @*if (SD.Admin || SD.Registrador || SD.Citas)
+            {
+                <li class="nav-item has-treeview menu-close" aria-expanded="false">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-tools"></i>
+                        <p>
+                            Mantenimiento
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @**@if (SD.Admin || SD.Registrador)
+                        {
+
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Especialidad"
+                                   asp-action="Index" class="nav-link">
+                                    <i class="fas fa-stethoscope"></i>
+                                    <p>Especialidades</p>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Enfermedades"
+                                   asp-action="Index" class="nav-link">
+                                    <i class="fas fa-user-nurse"></i>
+                                    <p>Enfermedades</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Medico"
+                                   asp-action="Index" class="nav-link">
+                                    <i class="fas fa-user-md"></i>
+                                    <p>Médicos</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Paciente"
+                                   asp-action="Index" class="nav-link">
+                                    <i class="far fa-ambulance"></i>
+                                    <p>Pacientes</p>
+                                </a>
+                            </li>
+                        }
+                        @*if (SD.Admin || SD.Citas)*@
+                        {
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Citas"
+                                   asp-action="Index" class="nav-link">
+                                    <i class="fas fa-person-booth"></i>
+                                    <p>Citas</p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            @*if (SD.Admin || SD.Consultas)*@
+            {
+                <li class="nav-item has-treeview menu-close">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-user-cog"></i>
+                        <p>
+                            Consultas
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="ConsultaEspecialidades"
+                               asp-action="Index" class="nav-link">
+                                <i class="fas fa-id-card-alt"></i>
+                                <p>Especialidades</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="ConsultaEnfermedades"
+                               asp-action="Index" class="nav-link">
+                                <i class="fas fa-address-card"></i>
+                                <p>Enfermedades</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-user-nurse"></i>
+                                <p>Médicos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-users-cog"></i>
+                                <p>Pacientes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="ConsultaCitas"
+                               asp-action="Index" class="nav-link">
+                                <i class="fas fa-address-card"></i>
+                                <p>Citas</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+
+            tipoUsuarioId = 1=Admin 2=Registrador 3=Citas 4=Consultas
+
+
+
+            @*if (SD.Registrador)*@
+            {
+                <li class="nav-item has-treeview menu-close">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-dumbbell"></i>
+                        <p>
+                            Administración
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="TipoUsuarios"
+                               asp-action="Index" class="nav-link">
+                                <i class="fas fa-user-cog"></i>
+                                <p>Roles</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Usuarios"
+                               asp-action="Index" class="nav-link">
+                                <i class="fas fa-user-friends"></i>
+                                <p>Usuarios</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-user-lock"></i>
+                                <p>Asignar rol</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+
+            <li class="nav-item has-treeview menu-close">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <p>
+                            Modulo Tarifas
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-users-cog"></i>
+                                <p>Operacion de clientes</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Login"
+                   asp-action="CerrarSesion" class="nav-link">
+                    <i class="fas fa-user-friends"></i>
+                    <p>Cerrar sesión</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+     /.sidebar-menu 
+     /.sidebar 
+</aside>
+

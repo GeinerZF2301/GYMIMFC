@@ -4,14 +4,16 @@ using GYMIMFC.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GYMIMFC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211112083310_models")]
+    partial class models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,16 +52,15 @@ namespace GYMIMFC.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EmpleadoId")
+                    b.Property<int>("EmpleadoId")
                         .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmpleadoId1")
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("FechaCita")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("ServicioId")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
 
                     b.Property<int?>("ServiciosServicioId")
                         .HasColumnType("int");
@@ -70,7 +71,7 @@ namespace GYMIMFC.Migrations
 
                     b.HasKey("citaId");
 
-                    b.HasIndex("EmpleadoId");
+                    b.HasIndex("EmpleadoId1");
 
                     b.HasIndex("ServiciosServicioId");
 
@@ -404,7 +405,7 @@ namespace GYMIMFC.Migrations
                 {
                     b.HasOne("GYMIMFC.Models.Empleado", "Empleado")
                         .WithMany("Cita")
-                        .HasForeignKey("EmpleadoId");
+                        .HasForeignKey("EmpleadoId1");
 
                     b.HasOne("GYMIMFC.Models.Servicios", "Servicios")
                         .WithMany("Cita")

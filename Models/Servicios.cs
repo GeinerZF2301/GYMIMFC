@@ -4,29 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace GYMIMFC.Models
 {
-    public class Servicios
+    public partial class Servicios
     {
+        public Servicios()
+        {
+            Empleado = new HashSet<Empleado>();
+        }
+            
         [Key]
-        [Display(Name = "ID del Servicio")]
-        [MaxLength(50)]
-        public virtual int idServicio { get; set; }
-        [Display(Name = "Nombre del Servicio")]
-        [StringLength(50)]
-        public virtual string nombreServicio { get; set; }
-        [Display(Name = "Numero de matrícula")]
-        [MaxLength(50)]
-        public virtual string numeroMatricula { get; set; }
-        [Display(Name = "ID de categoría")]
-        [MaxLength(50)]
-        public virtual int idCategoria { get; set; }
-
-        public virtual IList<Cita> Matriculas { get; set; }
-        [ForeignKey("idCategoria")]
+        [DisplayName("ID")]
+        [Required(ErrorMessage = "Debe digitar el ID de la ënfermedad")]
+        public int ServicioId { get; set; }
+        [DisplayName("Nombre")]
+        [Required(ErrorMessage = "Debe digitar el nombre de la enfermedad")]
+        public string Nombre { get; set; }
+        [DisplayName("Descripcion")]
+        [Required(ErrorMessage = "Debe digitar la descripción de la ënfermedad")]
+        public string Descripcion { get; set; }
         public virtual Categoria Categoria { get; set; }
-
+        public virtual ICollection<Cita> Cita { get; set; }
+        public virtual ICollection<Empleado> Empleado { get; set; }
     }
 }
    
