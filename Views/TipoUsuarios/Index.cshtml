@@ -1,0 +1,304 @@
+﻿
+@model IEnumerable<TipoUsuario>
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+<form id="frmEnviar" asp-controller="TipoUsuarios" asp-action="Index" method="post">
+</form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+                Lista de roles de Usuarios
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-lg-2 text-right">
+            <button class="btn btn-success fa fa-plus-circle"
+                    data-toggle="modal" data-target="#Create"
+                    style="width: 100%; height:100%;padding:6px;">
+                Nuevo
+            </button>
+        </div>
+        <br />
+        <div class="col-md-2 colo-lg-2 text-right">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-info fa fa fa-arrow-circle-left"
+               style="width: 100%; height:100%;padding:6px;">
+                Regresar al menú
+            </a>
+        </div>
+        <div class="col-md-12" style="color:black;"><hr></div>
+    </div>
+</div>
+
+<div class="container">
+    @if (Model.Count() > 0)
+    {
+<div class="backgroundWhiteBorder10Padding">
+    <table class="table table-hover .table-responsive" id="tbDatos">
+        <thead class="thead-dark">
+            <tr class="table-secondary" id="head">
+                <th>@Html.DisplayNameFor(m => m.TipoUsuarioId)</th>
+                <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                <th>Operaciones</th>
+            </tr>
+        </thead>
+        <tbody style="text-align:left;">
+            @foreach (var item in Model)
+            {
+<tr>
+    <td>@Html.DisplayFor(m => item.TipoUsuarioId)</td>
+    <td>@Html.DisplayFor(m => item.Nombre)</td>
+    <td style="width:15%;">
+        <button type="button" id="btnDelete" class="fa fa-trash btn btn-danger"
+                onClick="EliminarTipoUsuario(@item.TipoUsuarioId)"
+                nombre="@item.Nombre">
+        </button>
+
+        <button type="button" id="btnDetails"
+                class="fa fa-info-circle btn btn-info"
+                onClick="ObtenerDetalles(@item.TipoUsuarioId)"
+                name='Details'
+                url='/TipoUsuarios/Details/'>
+        </button>
+
+        <button type="button" id="btnEdit" class="fa fa-pencil btn btn-info"
+                onClick="ObtenerDetalles(@item.TipoUsuarioId)"
+                name='Edit'
+                url='/TipoUsuarios/Edit/'>
+        </button>
+    </td>
+</tr>}
+        </tbody>
+    </table>
+</div> }
+            else
+            {
+<h5 style="color:red;">No se encontraron roles de usuarios!...</h5>}
+
+</div>
+<form asp-action="Delete" asp-controller="TipoUsuarios" method="post" id="viewEliminar">
+    <input type="hidden" id="txtTipoUsuarioId" name="TipoUsuarioId" />
+</form>
+
+<form asp-action="Index" asp-controller="TipoUsuarios"
+      method="post" id="frmTipoUsuarios">
+</form>
+
+
+<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Rol de usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="backgroundWhiteBorder10Padding">
+                    <div class="form-group">
+                        <label>Tipo Usuario ID: </label>
+                        <input type="text" id="txtTipousuarioId"
+                               value="@ViewBag.ID" readonly="readonly"
+                               class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre </label>
+                        <input type="text" id="txtnombre"
+                               class="form-control"
+                               placeholder="Escriba el nombre del rol usuario" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        onclick="Actualizar('TipoUsuarios/Create')">
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        id="btnCancelar">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title" id="exampleModalLabel">Modificar rol de usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="backgroundWhiteBorder10Padding">
+                    <div class="form-group">
+                        <label>Tipo Usuario ID: </label>
+                        <input type="text" id="tipoUsuarioId"
+                               readonly="readonly"
+                               class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nombre </label>
+                        <input type="text" id="nombre"
+                               class="form-control"
+                               placeholder="Modifique el nombre del rol de usuario" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            onclick="Actualizar('TipoUsuarios/Edited')">
+                        Actualizar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                            id="btnCancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Details" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles del rol de usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="backgroundWhiteBorder10Padding">
+                    <div class="form-group">
+                        <label>Tipo Usuario ID: </label>
+                        <input type="text" id="tipousuarioId" readonly="readonly"
+                               class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre </label>
+                        <input type="text" id="name" readonly="readonly"
+                               class="form-control" />
+                    </div>
+                    @*<div class="form-group">
+                            <label>Activo </label>
+                            <input type="text" id="habilitado" readonly="readonly"
+                                   class="form-control" />
+                        </div>*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        id="btnCancelar">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+
+<script>$(document).ready(function () {
+            $('#tbDatos').DataTable(
+                {
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    }
+                });
+        })
+        function Actualizar(url) {
+            if (url == "TipoUsuarios/Create") {
+                var tipousuarioId = document.getElementById("txtTipousuarioId").value;
+                var nombre = document.getElementById("txtnombre").value;
+                var bHabilitado = 1;
+            }
+            else {
+                var tipousuarioId = document.getElementById("tipoUsuarioId").value;
+                var nombre = document.getElementById("nombre").value;
+                var bHabilitado = 1;
+            }
+
+            var frm = new FormData();
+            frm.append("TipoUsuarioId", tipousuarioId);
+            frm.append("Nombre", nombre);
+            frm.append("Bhabilitado", bHabilitado);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: frm,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data == "OK") {
+                        correcto("Se actualizó correctamente el tipo de usuario!");
+                        document.getElementById("btnCancelar").click();
+                        document.getElementById("frmEnviar").submit();
+                    }
+                    else {
+                        error("Ocurrió un error, por favor verifique!");
+                    }
+                }
+            })
+        }
+
+        function ObtenerDetalles(id) {
+            let url = event.target.getAttribute('url');
+            $.ajax({
+                url: url + id,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (response) {
+                    if (url == "/TipoUsuarios/Edit/") {
+                        $('#tipoUsuarioId').val(response.tipoUsuarioId);
+                        $('#nombre').val(response.nombre);
+                        $('#Edit').modal('show');
+                    }
+                    if (url == "/TipoUsuarios/Details/") {
+                        $('#tipousuarioId').val(response.tipoUsuarioId);
+                        $('#name').val(response.nombre);
+                        $('#Details').modal('show');
+                    }
+                },
+                error: function (response) {
+                    error(response.responseText);
+                }
+            });
+            return false;
+        }
+
+        function EliminarTipoUsuario(TipoUsuarioId) {
+            document.getElementById("txtTipoUsuarioId").value = TipoUsuarioId;
+            verModal('Eliminar tipo de usuario',
+                '¿Desea eliminar el tipo de usuario '
+                + TipoUsuarioId + '?').then((result) => {
+                    if (result.value) {
+                        var viewEliminar = document.getElementById("viewEliminar");
+                        viewEliminar.submit();
+                        Swal.fire(
+                            'Eliminación!',
+                            'El tipo de usuario ' + TipoUsuarioId + ' fue eliminado!.',
+                            'success'
+                        )
+                    }
+                    else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire(
+                            'Cancelado',
+                            'El tipo de usuario no fue eliminado!!!:)',
+                            'error'
+                        )
+                    }
+                })
+        }</script>

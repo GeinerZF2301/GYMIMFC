@@ -1,0 +1,368 @@
+﻿@model IEnumerable<UsuarioTipoUsuario>
+@using GYMIMFC.Models.ViewModels
+@{
+    ViewData["Title"] = "Index";
+ Layout = "~/Views/Shared/_Layout.cshtml";
+ List<SelectListItem> Lista = ViewBag.listaTipoUsuario;
+}
+<form id="frmEnviar" asp-controller="Usuarios" asp-action="Index" method="post">
+</form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+                Lista de Usuarios
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-lg-2 text-right">
+            <button class="btn btn-success fa fa-plus-circle"
+                    data-toggle="modal" data-target="#Create"
+                    style="width: 100%; height:100%;padding:6px;">
+                Nuevo
+            </button>
+        </div>
+        <br />
+        <div class="col-md-2 colo-lg-2 text-right">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-info fa fa fa-arrow-circle-left"
+               style="width: 100%; height:100%;padding:6px;">
+                Regresar al menú
+            </a>
+        </div>
+        <div class="col-md-12" style="color:black;"><hr></div>
+    </div>
+</div>
+<div class="container">
+    @if (Model.Count() > 0)
+    {
+        <div class="backgroundWhiteBorder10Padding">
+            <table class="table table-hover .table-responsive" id="tbDatos">
+                <thead class="thead-dark">
+                    <tr class="table-secondary" id="head">
+                        <th>@Html.DisplayNameFor(m => m.UsuarioId)</th>
+                        <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                        <th>@Html.DisplayNameFor(m => m.TipoUsuarioNombre)</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:left;">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => item.UsuarioId)</td>
+                            <td>@Html.DisplayFor(m => item.Nombre)</td>
+                            <td>@Html.DisplayFor(m => item.TipoUsuarioNombre)</td>
+                            <td style="width:15%;">
+                                <button type="button" id="btnDelete" class="fa fa-trash btn btn-danger"
+                                        onClick="EliminarUsuario(@item.UsuarioId)"
+                                        nombre="@item.Nombre">
+                                </button>
+
+                                <button type="button" id="btnDetails"
+                                        class="fa fa-info-circle btn btn-info"
+                                        onClick="ObtenerDetalles(@item.UsuarioId)"
+                                        name='Details'
+                                        url='/Usuarios/Details/'>
+                                </button>
+
+                                <button type="button" id="btnEdit" class="fa fa-pencil btn btn-info"
+                                        onClick="ObtenerDetalles(@item.UsuarioId)"
+                                        name='Edit'
+                                        url='/Usuarios/Edit/'>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h5 style="color:red;">No se encontraron usuarios!...</h5>
+    }
+</div>
+
+<form asp-action="Delete" asp-controller="Usuarios" method="post" id="viewEliminar">
+    <input type="hidden" id="txtUsuarioId" name="UsuarioId" />
+</form>
+
+<form asp-action="Index" asp-controller="Usuarios"
+      method="post" id="frmUsuarios">
+</form>
+
+
+<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="backgroundWhiteBorder10Padding">
+                    <div class="form-group">
+                        <label>Usuario ID: </label>
+                        <input type="text" id="txtusuarioId"
+                               value="@ViewBag.ID" readonly="readonly"
+                               class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre </label>
+                        <input type="text" id="txtnombre"
+                               class="form-control"
+                               placeholder="Escriba el nombre del usuario" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña: </label>
+                        <input type="password" id="txtpassword"
+                               class="form-control"
+                               placeholder="Escriba la contraseña" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña: </label>
+                        <input type="password" id="txtpassword1"
+                               class="form-control"
+                               placeholder="Escriba de nuevo la contraseña" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rol del usuario </label>
+                        @Html.DropDownList("tipoUsuarioId", Lista,
+                              new { @class = "form form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        onclick="Actualizar('Usuarios/Create')">
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        id="btnCancelar">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title" id="exampleModalLabel">Modificar Paciente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="backgroundWhiteBorder10Padding">
+                    <div class="form-group">
+                        <label>Usuario ID: </label>
+                        <input type="text" id="UsuarioId"
+                               readonly="readonly"
+                               class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nombre </label>
+                        <input type="text" id="Nombre"
+                               class="form-control"
+                               placeholder="Modifique el nombre del usuario" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña: </label>
+                        <input type="password" id="Password"
+                               class="form-control"
+                               placeholder="Modifique la contraseña" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rol del usuario </label>
+                        @Html.DropDownList("TipoUsuarioId", Lista,
+                              new { @class = "form form-control" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            onclick="Actualizar('Usuarios/Edited')">
+                        Actualizar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                            id="btnCancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Details" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles del Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="backgroundWhiteBorder10Padding">
+                    <div class="form-group">
+                        <label>Usuario ID: </label>
+                        <input type="text" id="usuarioId" readonly="readonly"
+                               class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre </label>
+                        <input type="text" id="nombre" readonly="readonly"
+                               class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña: </label>
+                        <input type="text" id="password" readonly="readonly"
+                               class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rol del usuario </label>
+                        @Html.DropDownList("tipoUsuarioId", Lista,
+                              new { @class = "form form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        id="btnCancelar">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tbDatos').DataTable(
+            {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+            });
+    })
+    function Actualizar(url) {
+        if (url == "Usuarios/Create") {
+            var nombre = document.getElementById("txtnombre").value;
+            var password = document.getElementById("txtpassword").value;
+            var tipoUsuarioId = document.getElementById("tipoUsuarioId").value;
+            var password1 = document.getElementById("txtpassword1").value;
+            if ((password.length < 8) || (password.length > 16)) {
+                error("Las contraseñas deben estar en una longitud de 8 a 16 caracteres!")
+                return;
+            }
+            if (password != password1) {
+                error("Las contraseñas deben coincidir!");
+                return;
+            }
+        }
+        else {
+            var usuarioId = document.getElementById("UsuarioId").value;
+            var nombre = document.getElementById("Nombre").value;
+            var password = document.getElementById("Password").value;
+            var tipoUsuarioId = document.getElementById("TipoUsuarioId").value;
+        }
+
+        var frm = new FormData();
+        frm.append("UsuarioId", usuarioId);
+        frm.append("Nombre", nombre);
+        frm.append("Password", password);
+        frm.append("TipoUsuarioId", tipoUsuarioId);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: frm,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data == "OK") {
+                    correcto("Se actualizó correctamente el usuario!");
+                    document.getElementById("btnCancelar").click();
+                    document.getElementById("frmEnviar").submit();
+                }
+                else {
+                    error("Ocurrió un error, por favor verifique!");
+                }
+            }
+        })
+    }
+
+    function ObtenerDetalles(id) {
+        let url = event.target.getAttribute('url');
+        $.ajax({
+            url: url + id,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (response) {
+                if (url == "/Usuarios/Edit/") {
+                    $('#UsuarioId').val(response.usuarioId);
+                    $('#Nombre').val(response.nombre);
+                    $('#Password').val(response.password);
+                    $('#TipoUsuarioId').val(response.tipoUsuarioId);
+                    $('#Edit').modal('show');
+                }
+                if (url == "/Usuarios/Details/") {
+                    $('#usuarioId').val(response.usuarioId);
+                    $('#nombre').val(response.nombre);
+                    $('#password').val(response.password);
+                    $('#tipoUsuarioId').val(response.tipoUsuarioId);
+                    $('#Details').modal('show');
+                }
+            },
+            error: function (response) {
+                error(response.responseText);
+            }
+        });
+        return false;
+    }
+
+    function EliminarUsuario(UsuarioId) {
+        document.getElementById("txtUsuarioId").value = UsuarioId;
+        verModal('Eliminar usuario',
+            '¿Desea eliminar el usuario '
+            + UsuarioId + '?').then((result) => {
+                if (result.value) {
+                    var viewEliminar = document.getElementById("viewEliminar");
+                    viewEliminar.submit();
+                    Swal.fire(
+                        'Eliminación!',
+                        'El usuario' + UsuarioId + 'fue eliminado!.',
+                        'success'
+                    )
+                }
+                else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                        'Cancelado',
+                        'El usuario no fue eliminado!!!:)',
+                        'error'
+                    )
+                }
+            })
+    }
+
+</script>
