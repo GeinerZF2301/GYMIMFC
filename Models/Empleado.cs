@@ -14,25 +14,25 @@ namespace GYMIMFC.Models
             Cita = new HashSet<Cita>();
         }
             [Key]
-         [Required(ErrorMessage = "Debe digitar el ID del médico")]
-         [Display(Name = "Médico ID:")]
+         [Required(ErrorMessage = "Debe digitar el ID del Empleado")]
+         [Display(Name = "Empleado ID:")]
          [MaxLength(50)]
          public string EmpleadoId { get; set; }
-         [Required(ErrorMessage = "Debe digitar el nombre del médico")]
+         [Required(ErrorMessage = "Debe digitar el nombre del Empleado")]
          [Display(Name = "Nombre:")]
          [StringLength(50)]
          public string Nombre { get; set; }
 
-         [Required(ErrorMessage = "Debe digitar los apellidos del médico")]
+         [Required(ErrorMessage = "Debe digitar los apellidos del Empleado")]
          [Display(Name = "Apellidos:")]
          [StringLength(50)]
         public string Apellidos { get; set; }
-         [Required(ErrorMessage = "Debe digitar la dirección del médico")]
+         [Required(ErrorMessage = "Debe digitar la dirección del Empleado")]
          [StringLength(75)]
         public string Direccion { get; set; }
-         [Required(ErrorMessage = "Debe digitar el # de teléfono del médico")]
+         [Required(ErrorMessage = "Debe digitar el # de teléfono del Empleado")]
          public string TelefonoFijo { get; set; }
-         [Required(ErrorMessage = "Debe digitar el # de celular del médico")]
+         [Required(ErrorMessage = "Debe digitar el # de celular del Empleado")]
          [DataType(DataType.PhoneNumber)]
          public string TelefonoCelular { get; set; }
          public byte[] Foto { get; set; }

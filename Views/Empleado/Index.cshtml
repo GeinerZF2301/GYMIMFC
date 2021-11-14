@@ -1,0 +1,171 @@
+﻿@model IEnumerable<EmpleadoServicio>
+@using GYMIMFC.Models.ViewModels;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+            Lista de Empleados
+        </h3>
+    </div>
+</div>
+<br />
+<div class="container">
+    <form asp-controller="Empleado" asp-action="Index" method="post">
+        <div class="row">
+            <div class="col-md-1 text-right">
+                <input type="button" value="Generar PDF"
+                       class="btn btn-outline-primary" onclick="ExportarPDF()" />
+            </div>
+
+            <div class="col-md-2 text-right">
+                <a asp-controller="Home" asp-action="Index"
+                   class="btn btn-outline-info">
+                    Regresar al menú
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3" style="font-size:larger;">
+                <label class="col-form-label">Filtrar por Servicios :</label>
+            </div>
+            <div class="col-9 text-right">
+                <partial name="_Filter" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-lg-3 text-right">
+                <a asp-action="Create" class="btn btn-success fa fa-plus-circle"
+                   style="float:left;">
+                    Nuevo
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12" style="color:black;"><hr /></div>
+    </form>
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-hover .table-responsive" id="tbDatos" name="tbDatos">
+            <thead class="thead-dark">
+                <tr class="table-secondary" style="text-align:left;font-size:16px;">
+                    <th>@Html.DisplayNameFor(m => m.EmpleadoId)</th>
+                    <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                    <th>@Html.DisplayNameFor(m => m.Apellidos)</th>
+                    <th>@Html.DisplayNameFor(m => m.Direccion)</th>
+                    <th>@Html.DisplayNameFor(m => m.TelefonoFijo)</th>
+                    <th>@Html.DisplayNameFor(m => m.TelefonoCelular)</th>
+                    <th>@Html.DisplayNameFor(m => m.Servicio)</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:left;font-size:14px;">
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(m => item.EmpleadoId)</td>
+                    <td>@Html.DisplayFor(m => item.Nombre)</td>
+                    <td>@Html.DisplayFor(m => item.Apellidos)</td>
+                    <td>@Html.DisplayFor(m => item.Direccion)</td>
+                    <th>@Html.DisplayNameFor(m => m.TelefonoFijo)</th>
+                    <th>@Html.DisplayNameFor(m => m.TelefonoCelular)</th>
+                    <td>@Html.DisplayFor(m => item.Servicio)</td>
+                    <td>
+                        @*opcion 1 para borrar*@
+                        @*<i class="fa fa-trash btn btn-danger" aria-hidden="true"
+            onclick="EliminarMedico(@item.MedicoId)"></i>*@
+
+                        @*opcion 2 para borrar*@
+
+                        <a class="fa fa-trash btn btn-danger" aria-hidden="true"
+                           asp-controller="Empleado" asp-action="Delete"
+                           asp-route-id="@item.EmpleadoId"></a>
+
+
+                        <a class="fa fa-info-circle btn btn-primary" aria-hidden="true"
+                           asp-controller="Empleado" asp-action="Details"
+                           asp-route-id="@item.EmpleadoId"></a>
+
+                        <a class="fa fa-pencil btn btn-info" aria-hidden="true"
+                           asp-controller="Empleado" asp-action="Edit"
+                           asp-route-id="@item.EmpleadoId"></a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h5 style="color:red;">No se encontraron Empleados!...</h5>
+    }
+    <form asp-action="Delete" asp-controller="Empleado" method="post" id="viewEliminar">
+        <input type="hidden" id="txtEmpleadoId" name="EmpleadoId" />
+    </form>
+
+    <form asp-action="Edit" asp-controller="Empleado" method="post" id="viewEditar">
+        <input type="hidden" id="txtEmpleadoId" name="EmpleadoId" />
+    </form>
+
+    <form asp-action="exportar" target="_blank" asp-controller="Empleado" asp-route-id="tbDatos"
+          method="post" id="viewExportarPDF">
+        <input type="hidden" id="txtBuscar" name="txtBuscar" />
+    </form>
+</div>
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tbDatos').DataTable(
+            {
+                "filter": false,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+            })
+    })
+    function EliminarEmpleado(EmpleadoId) {
+        document.getElementById("txtEmpleadoId").value = EmpleadoId;
+        verModal('Eliminar Empleado',
+            '¿Desea eliminar el código de Empleado '
+            + EmpleadoId + '?').then((result) => {
+                if (result.value) {
+                    var viewEliminar = document.getElementById("viewEliminar");
+                    viewEliminar.submit();
+                    Swal.fire(
+                        'Eliminación!',
+                        'El Empleado' + EmpleadoId + 'fue eliminado!.',
+                        'success'
+                    )
+                }
+                else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                        'Cancelado',
+                        'El Empleado no fue eliminado!!!:)',
+                        'error'
+                    )
+                }
+            })
+    }
+    function Buscar() {
+        var nombre = document.getElementById("nombre").value;
+        var url = "Empleado/BuscarEmpleadoServicio/?nombreServicios=" + nombre;
+        var tbody = document.getElementById("tbDatos");
+        var campos = new Array("EmpleadoId", "nombre", "apellidos",
+            "direccion", "Servicios");
+        pintarPantallaConsulta(url, campos, tbody);
+    }
+    function ExportarPDF() {
+        var aux = document.getElementById("viewExportarPDF");
+        aux.submit();
+    }
+    function Resetear() {
+        document.getElementById("nombre").value = "";
+        Buscar();
+    }
+</script>
+
+

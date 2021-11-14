@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<Cliente>
 @{ ViewData["Title"] = "Index";
                 Layout = "~/Views/Shared/_Layout.cshtml";
-                var Error = ViewBag.Error; }
+                var Error = ViewBag.Error; 
+ }
 <form id="frmEnviar" asp-controller="Cliente" asp-action="Index" method="post">
 </form>
 
-<form asp-action="exportarPDF" target="_blank"
-      asp-controller="Cliente"
-      method="post" id="viewExportarPDF">
-    @solo sirve para ejecutar el actionresult@
-</form>
+<!--<form asp-action="exportarPDF" target="_blank"
+      asp-controller="Paciente"
+      method="post" id="viewExportarPDF">-->
+    @*solo sirve para ejecutar el actionresult*@
+<!--</form>-->
 
 
 
@@ -55,10 +56,10 @@
         <thead>
             <tr class="table-secondary" id="head">
                 <th>@Html.DisplayNameFor(m => m.ClienteId)</th>
-                <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                <th>@Html.DisplayNameFor(m => m.nombreCliente)</th>
                 <th>@Html.DisplayNameFor(m => m.Apellidos)</th>
                 <th>@Html.DisplayNameFor(m => m.Direccion)</th>
-                <th>@Html.DisplayNameFor(m => m.TelefonoContacto)</th>
+                <th>@Html.DisplayNameFor(m => m.Cedula)</th>
                 <th>@Html.DisplayNameFor(m => m.Email)</th>
                 <th>Operaciones</th>
             </tr>
@@ -68,16 +69,16 @@
             {
 <tr>
     <td>@Html.DisplayFor(m => item.ClienteId)</td>
-    <td>@Html.DisplayFor(m => item.Nombre)</td>
+    <td>@Html.DisplayFor(m => item.nombreCliente)</td>
     <td>@Html.DisplayFor(m => item.Apellidos)</td>
     <td>@Html.DisplayFor(m => item.Direccion)</td>
-    <td>@Html.DisplayFor(m => item.TelefonoContacto)</td>
+    <td>@Html.DisplayFor(m => item.Cedula)</td>
     <td>@Html.DisplayFor(m => item.Email)</td>
 
     <td style="width:15%;">
         <button type="button" id="btnDelete" class="fa fa-trash btn btn-danger"
                 onClick="EliminarCliente(@item.ClienteId)"
-                nombre="@item.Nombre">
+                nombre="@item.nombreCliente">
         </button>
 
         <button type="button" id="btnDetails"
@@ -380,14 +381,14 @@
                     $('#Nombre').val(response.nombre);
                     $('#Apellidos').val(response.apellidos);
                     $('#Direccion').val(response.direccion);
-                    $('#TelefonoContacto').val(response.telefonoContacto);
+                    $('#Cedula').val(response.cedula);
                     $('#Email').val(response.email);
                     if (url == "/Paciente/Edit/") {
                         $('#PacienteId').val(response.pacienteId);
                         $('#Nombre').val(response.nombre);
                         $('#Apellidos').val(response.apellidos);
                         $('#Direccion').val(response.direccion);
-                        $('#TelefonoContacto').val(response.telefonoContacto);
+                        $('#Cedula').val(response.cedula);
                         $('#Email').val(response.email);
                         $('#Edit').modal('show');
                     }
@@ -396,7 +397,7 @@
                         $('#nombre').val(response.nombre);
                         $('#apellidos').val(response.apellidos);
                         $('#direccion').val(response.direccion);
-                        $('#telefonoContacto').val(response.telefonoContacto);
+                        $('#Cedula').val(response.cedula);
                         $('#email').val(response.email);
                         $('#Details').modal('show');
                     }

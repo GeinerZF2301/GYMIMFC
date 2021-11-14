@@ -1,0 +1,90 @@
+﻿@model Empleado
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> Lista = ViewBag.ListaEspecialidades;
+}
+<div class="container">
+    <h3 class="text-blue" style="text-align:center">Detalles del Empleado</h3>
+    <div class="border-top my-1"></div>
+    <br />
+    <form asp-action="Details" asp-controller="Empleado" method="post"
+          id="viewEditar" enctype="multipart/form-data">
+        <div class="container-fluid">
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="EmpleadoId" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="EmpleadoId" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="Nombre" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="Nombre" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="Apellidos" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="Apellidos" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="Direccion" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <textarea asp-for="Direccion" rows="3" cols="50"
+                              class="form-control" readonly="readonly"></textarea>
+                </div>
+                <div class="col-5 form-control" style="border:none; float:left;">
+                    @{
+                        var base64 = Convert.ToBase64String(Model.Foto);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    }
+                    <img id="image" src="@imgsrc" alt="image about photo"
+                         style="width: 180px; height: 150px; box-shadow: 0 3px 10px;" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="TelefonoFijo" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="TelefonoFijo" class="form-control" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="TelefonoCelular" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="TelefonoCelular" class="form-control" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="ServicioId" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <select asp-for="ServicioId" class="form-control"
+                            asp-items="@Lista" disabled="disabled"></select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-2">
+                    <a asp-action="Index" class="btn btn-success form-control"
+                       style="width: 100%;">Regresar a la lista</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
