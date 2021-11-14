@@ -1,0 +1,123 @@
+﻿@model IEnumerable<CitaGym>
+@using GYMIMFC.Models.ViewModels
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String fechaInicio = @ViewBag.fechaInicio;
+    String fechaFinal = @ViewBag.fechaFinal;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+                Consulta de Citas por fecha
+            </h3>
+        </div>
+    </div>
+    <br />
+    <form asp-controller="ConsultaCitas" asp-action="Index" method="post" id="frmQuery">
+        <div class="row">
+            <div class="col-sm">
+                <label>Fecha Inicio:</label>
+            </div>
+            <div class="col-sm">
+                <input type="date" class="form-control" name="FechaInicio" id="FechaInicio"
+                       style="width: 100%;height:80%;" value="@fechaInicio" />
+            </div>
+            <div class="col-sm">
+                <label>Fecha Final:</label>
+            </div>
+            <div class="col-sm">
+                <input type="date" class="form-control" name="FechaFinal" id="FechaFinal"
+                       style="width: 100%;height:80%;" value="@fechaFinal" />
+            </div>
+            <div class="col-sm">
+                <input type="submit" value="Buscar" class="btn btn-success"
+                       style="width: 100%;height:100%;" />
+            </div>
+            <div class="col-sm">
+                <input type="button" value="Resetear" class="btn btn-danger"
+                       onclick="Resetear()" style="width: 100%;height: 100%;" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+
+
+            <div class="col-md-2 col-lg-2 text-right">
+                <input type="button" value="Generar PDF"
+                       style="width: 100%;height:100%;"
+                       class="btn btn-primary" onclick="ExportarPDF()" />
+            </div>
+            <div class="col-md-2 col-lg-2 text-right">
+                <input type="button" value="Generar Excel"
+                       style="width: 100%;height:100%;"
+                       class="btn btn-primary" onclick="ExportarExcel()" />
+            </div>
+        </div>
+    </form>
+    <br />
+    <div class="backgroundWhiteBorder10Padding">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-hover .table-responsive">
+                <thead class="thead-dark">
+                    <tr class="table-secondary text-left">
+                        <th>@Html.DisplayNameFor(m => m.CitaId)</th>
+                        <th>@Html.DisplayNameFor(m => m.NombreCliente)</th>
+                        <th>@Html.DisplayNameFor(m => m.NombreEmpleado)</th>
+                        <th>@Html.DisplayNameFor(m => m.NombreServicio)</th>
+                        <th>@Html.DisplayNameFor(m => m.FechaCita)</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-left">
+                            <td>@Html.DisplayFor(m => item.CitaId)</td>
+                            <td>@Html.DisplayFor(m => item.NombreCliente)</td>
+                            <td>@Html.DisplayFor(m => item.NombreEmpleado)</td>
+                            <td>@Html.DisplayFor(m => item.NombreServicio)</td>
+                            <td>@Html.DisplayFor(m => item.FechaCita)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h5 style="color:red;">No se encontraron especialidades!...</h5>
+        }
+    </div>
+</div>
+
+<form asp-action="exportarPDF" target="_blank" asp-controller="ConsultaCitas"
+      method="post" id="viewExportarPDF">
+    @*solo sirve para ejecutar el actionresult*@
+</form>
+<form asp-action="exportarExcel" asp-controller="ConsultaCitas"
+      method="post" id="viewExportarExcel">
+    @*solo sirve para ejecutar el actionresult*@
+</form>
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+
+<script>
+    function ExportarPDF() {
+        var aux = document.getElementById("viewExportarPDF");
+        aux.submit();
+    }
+    function ExportarExcel() {
+        var aux = document.getElementById("viewExportarExcel");
+        aux.submit();
+    }
+    function Resetear() {
+        var hoy = new Date();
+        document.getElementById("FechaInicio").value = "01-01-0001";
+        document.getElementById("FechaFinal").value = "01-01-0001";
+        document.getElementById("frmQuery").submit();
+    }
+</script>
+
