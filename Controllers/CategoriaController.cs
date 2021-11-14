@@ -13,171 +13,77 @@ namespace GYMIMFC.Controllers
     {
         private readonly ApplicationDbContext _db;
         static List<Categoria> listaCategoria = new List<Categoria>();
+        static List<Categoria> lista = new List<Categoria>();
         public CategoriaController(ApplicationDbContext db)
         {
             _db = db;
         }
         [HttpGet]
-    public IActionResult Index()
-    {
-        listaCategoria = (from Categoria in _db.Categoria
-                            select new Categoria
-                            {
-                                idCategoria = Categoria.idCategoria,
-                                NombreCategoria = Categoria.NombreCategoria,
-                                Descripcion = Categoria.Descripcion.Substring(0, 80) + "..."
-                            }).ToList();
-
-        var model = listaCategoria;
-        return View("Index", model);
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Index(string dato)
-    {
-        if (dato == null)
+        public IActionResult Index()
         {
             listaCategoria = (from Categoria in _db.Categoria
-                                select new Categoria
-                                {
-                                    idCategoria = Categoria.idCategoria,
-                                    NombreCategoria = Categoria.NombreCategoria,
-                                    Descripcion = Categoria.Descripcion.Substring(0, 80) + "..."
-                                }).ToList();
+                              select new Categoria
+                              {
+                                  idCategoria = Categoria.idCategoria,
+                                  NombreCategoria = Categoria.NombreCategoria,
+                                  Descripcion = Categoria.Descripcion.Substring(0, 80) + "..."
+                              }).ToList();
+
+            var model = listaCategoria;
             return View(listaCategoria);
         }
-        else
-        {
-            ViewBag.Dato = dato;
-            listaCategoria = (from Categoria in _db.Categoria
-                                where (Categoria.NombreCategoria.Contains(dato))
-                                select new Categoria
-                                {
-                                    idCategoria = Categoria.idCategoria,
-                                    NombreCategoria = Categoria.NombreCategoria,
-                                    Descripcion = Categoria.Descripcion.Substring(0, 80) + "..."
-                                }).ToList();
-            return View(listaCategoria);
-        }
-    }
 
-    private void cargarUltimoRegistro()
-    {
-        var ultimoRegistro =
-            _db.Set<Categoria>().OrderByDescending(e =>
-                    e.idCategoria).FirstOrDefault();
-        if (ultimoRegistro == null)
+        private void determinarUltimoRegistro()
         {
-            ViewBag.ID = 1;
-        }
-        else
-        {
-            ViewBag.ID = ultimoRegistro.idCategoria + 1;
-        }
-    }
-
-    [HttpGet]
-    public IActionResult Create()
-    {
-        cargarUltimoRegistro();
-        return View();
-    }
-    [HttpPost]
-    public IActionResult Create(Categoria categoria)
-    {
-        string Error = "";
-        try
-        {
-            if (!ModelState.IsValid)
+            var ultimoRegistro = _db.Set<Categoria>().OrderByDescending(e => e.idCategoria).FirstOrDefault();
+            if (ultimoRegistro != null)
             {
-                return View(categoria);
+                ViewBag.idCategoria = ultimoRegistro.idCategoria + 1;
             }
-            else
-            {
-                Categoria _categoria = new Categoria
-                {
-                    NombreCategoria = categoria.NombreCategoria,
-                    Descripcion = categoria.Descripcion
-                };
+            else ViewBag.idCategoria = 1;
 
-                _db.Categoria.Add(_categoria);
-                _db.SaveChanges();
-            }
         }
 
-            catch (Exception ex)
-            {
-                Error = ex.Message;
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Details(int id)
+        public IActionResult Create()
         {
-            Categoria oCategoria = _db.Categoria
-                         .Where(e => e.idCategoria == id).First();
-            return View(oCategoria);
+            determinarUltimoRegistro();
+            return View();
         }
 
-        [HttpPost]
-        public IActionResult Edit(Categoria categoria)
+        public IActionResult Create(Categoria categoria)
         {
-            string error = "";
+
+            int nVeces = 0;
+            string Error = "";
             try
             {
-                if (!ModelState.IsValid)
+                nVeces = _db.Categoria.Where(e => e.idCategoria == categoria.idCategoria).Count();
+                if (!ModelState.IsValid || nVeces >= 1)
                 {
+                    if (nVeces > 1) ViewBag.msError = "El nombre de la categoria" +
+                                     " ya está registrado";
+                    determinarUltimoRegistro();
                     return View(categoria);
                 }
                 else
                 {
-                    Categoria _categoria = new Categoria
-                    {
-                        idCategoria = categoria.idCategoria,
-                        NombreCategoria = categoria.NombreCategoria,
-                        Descripcion = categoria.Descripcion
-                    };
-                    _db.Categoria.Update(_categoria);
+                    Categoria _categoria = new Categoria();
+                    _categoria.NombreCategoria = categoria.NombreCategoria;
+                    _categoria.Descripcion = _categoria.Descripcion;
+                    _db.Categoria.Add(_categoria);
                     _db.SaveChanges();
                 }
             }
-            catch (Exception ex)
-            {
-                error = ex.Message;
-            }
-            return RedirectToAction(nameof(Index));
-        }
 
-        [HttpPost]
-        public IActionResult Delete(int? idCategoria)
-        {
-            var Error = "";
-            try
-            {
-                Categoria oCategoria = _db.Categoria
-                             .Where(e => e.idCategoria == idCategoria).First();
-                _db.Categoria.Remove(oCategoria);
-                _db.SaveChanges();
-            }
             catch (Exception ex)
             {
                 Error = ex.Message;
             }
             return RedirectToAction(nameof(Index));
         }
-
-        public FileResult exportarPDF(List<Categoria> lista)
-        {
-            lista = listaCategoria;
-            Utilitarios util = new Utilitarios();
-            string[] cabeceras = { "Id Especialidad", "Nombre", "Descripcion" };
-            string[] nombrePropiedades = { "EspecialidadId", "Nombre", "Descripcion" };
-            string titulo = "Reporte de Especialidades";
-            byte[] buffer = util.ExportarPDFDatos(nombrePropiedades, lista, titulo);
-            return File(buffer, "application/pdf");
-        }
     }
-}
 
+
+}
 
 
