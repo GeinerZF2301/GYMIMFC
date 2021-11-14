@@ -1,7 +1,92 @@
-﻿
+﻿@model IEnumerable<Cliente>
 @{
-    ViewData["Title"] = "ListarClientes";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+            Lista de Clientes
+        </h3>
+    </div>
+</div>
+<div class="container">
+    <div class="col-md-2 col-lg-2 text-left">
+        <a asp-action="Index" class="btn btn-info">
+            Regresar
+        </a>
+    </div>
+    <br />  <br />
+    <form asp-controller="Cita" asp-action="Create" style="width:100%;" method="post" id="ViewBuscar">
+        <div class="backgroundWhiteBorder10Padding">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-hover .table-responsive" id="TbClientes">
+                    <thead class="thead-dark">
+                        <tr class="table-secondary" style="text-align:left;">
+                            <th>@Html.DisplayNameFor(m => m.ClienteId)</th>
+                            <th>@Html.DisplayNameFor(m => m.nombreCliente)</th>
+                            <th>@Html.DisplayNameFor(m => m.Apellidos)</th>
+                            <th>@Html.DisplayNameFor(m => m.Direccion)</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:left;">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => item.ClienteId)</td>
+                                <td>@Html.DisplayFor(m => item.nombreCliente)</td>
+                                <td>@Html.DisplayFor(m => item.Apellidos)</td>
+                                <td>@Html.DisplayFor(m => item.Direccion)</td>
+                                <td>
+                                    <i class="fa fa-hand-point-left btn btn-info" aria-hidden="true"
+                                       onclick="DatosPaciente(@item.ClienteId)"></i>
+                                </td>
 
-<h1>ListarClientes</h1>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h5 style="color:red;">No se encontraron Servicios!...</h5>
+            }
+        </div>
+    </form>
+</div>
+@*El controlador es citas, pero lo recibe por parametro en un ViewBag desde CitasController
+    procedimiento public IActionResult ListarClientes()*@
+
+<form asp-action="Create" asp-controller="Citas" method="post" id="viewPasar">
+    <input type="hidden" id="txtClienteId" name="ClienteId" />
+</form>
+
+
+<form asp-action="Index" asp-controller="Cita" method="post" id="viewTerminar">
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#TbCliente').DataTable(
+                {
+                "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    }
+                });
+        });
+        function DatosCliente(ClienteId) {
+            document.getElementById("txtClienteId").value = ClienteId;
+            var viewPasar = document.getElementById("viewPasar");
+            viewPasar.submit();
+        }
+        function RegresarLista() {
+            var viewRegresar = document.getElementById("viewTerminar");
+            viewRegresar.submit();
+        }
+
+    </script>
+}
 

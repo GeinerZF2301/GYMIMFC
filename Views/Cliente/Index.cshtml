@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
-            Lista de Pacientes
+            listaCliente
         </h3>
     </div>
 </div>
@@ -95,8 +95,9 @@
                 name='Edit'
                 url='/Cliente/Edit/'>
         </button>
-    </td>
-</tr>                }
+        </td>
+        </tr>               
+            }
         </tbody>
     </table>
 </div> }
@@ -119,12 +120,12 @@
                     <div class="backgroundWhiteBorder10Padding">
                         <div class="form-group">
                             <label>Cliente ID </label>
-                            <input type="text" id="txtpacienteId"
+                            <input type="text" id="txtClienteId"
                                    class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Nombre </label>
-                            <input type="text" id="txtnombre"
+                            <input type="text" id="txtnombreCliente"
                                    class="form-control" />
                         </div>
                         <div class="form-group">
@@ -137,7 +138,7 @@
                             <label>Dirección Domiciliar </label>
                             <textarea class="form-control" id="txtdireccion"
                                       name="txtdireccion"
-                                      placeholder="Dirección del paciente"
+                                      placeholder="Dirección del cliente"
                                       rows="2" cols="40">
                      </textarea>
                         </div>
@@ -155,7 +156,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary"
-                            onclick="Actualizar('Paciente/Create')">
+                            onclick="Actualizar('Cliente/Create')">
                         Guardar
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"
@@ -167,12 +168,11 @@
         </div>
     </div>
 
-    ///QUEDÉ ACÁ
     <div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header alert-info">
-                    <h5 class="modal-title" id="exampleModalLabel">Modificar paciente</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar Cliente</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -180,9 +180,9 @@
                 <div class="modal-body">
                     <div class="backgroundWhiteBorder10Padding">
                         <div class="form-group">
-                            <label>Paciente ID: </label>
-                            <input type="text" id="PacienteId"
-                                   name="PacienteId" readonly="readonly"
+                            <label>Cliente ID: </label>
+                            <input type="text" id="ClienteId"
+                                   name="ClienteId" readonly="readonly"
                                    class="form-control" />
                         </div>
                         <div class="form-group">
@@ -199,7 +199,7 @@
                             <label>Dirección domiciliar: </label>
                             <textarea class="form-control" id="Direccion"
                                       name="Direccion"
-                                      placeholder="Dirección del paciente"
+                                      placeholder="Dirección del Cliente"
                                       rows="2" cols="40">
                      </textarea>
                         </div>
@@ -218,7 +218,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary"
-                                onclick="Actualizar('Paciente/Edited')">
+                                onclick="Actualizar('Cliente/Edited')">
                             Actualizar
                         </button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"
@@ -237,7 +237,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header alert-info">
-                    <h5 class="modal-title" id="exampleModalLabel">Detalles del Paciente</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detalles del Cliente</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -245,8 +245,8 @@
                 <div class="modal-body">
                     <div class="backgroundWhiteBorder10Padding">
                         <div class="form-group">
-                            <label>Paciente ID: </label>
-                            <input type="text" id="pacienteId" readonly="readonly"
+                            <label>Cliente ID: </label>
+                            <input type="text" id="ClienteId" readonly="readonly"
                                    class="form-control" />
                         </div>
                         <div class="form-group">
@@ -264,7 +264,7 @@
                             <label>Dirección domiciliar: </label>
                             <textarea class="form-control" id="direccion" readonly="readonly"
                                       name="Direccion"
-                                      placeholder="Dirección del paciente"
+                                      placeholder="Dirección del Cliente"
                                       rows="2" cols="40">
                      </textarea>
                         </div>
@@ -292,13 +292,13 @@
 </div>
 
 
-<form asp-action="Delete" asp-controller="Paciente" method="post"
+<form asp-action="Delete" asp-controller="Cliente" method="post"
       id="viewEliminar">
-    <input type="hidden" id="txtPacienteId" name="PacienteId" />
-    <input type="hidden" id="txtNombre" name="Nombre" />
+    <input type="hidden" id="txtClienteId" name="ClienteId" />
+    <input type="hidden" id="txtnombreCliente" name="Nombre Cliente" />
 </form>
 
-<form id="frmPacientes" asp-action="Index" asp-controller="Paciente"
+<form id="frmCliente" asp-action="Index" asp-controller="Cliente"
       method="post">
 </form>
 
@@ -324,18 +324,18 @@
 
         function Actualizar(url) {
 
-            if (url == "Paciente/Create") {
-                var pacienteId = document.getElementById("txtpacienteId").value;
-                var nombre = document.getElementById("txtnombre").value;
+            if (url == "Cliente/Create") {
+                var ClienteId = document.getElementById("txtClienteId").value;
+                var nombreCliente = document.getElementById("txtnombreCliente").value;
                 var apellidos = document.getElementById("txtapellidos").value;
                 var direccion = document.getElementById("txtdireccion").value;
                 var telefono = document.getElementById("txttelefono").value;
                 var email = document.getElementById("txtemail").value;
-                alert(pacienteId);
+                alert(ClienteId);
             }
             else {
-                var pacienteId = document.getElementById("PacienteId").value;
-                var nombre = document.getElementById("Nombre").value;
+                var ClienteId = document.getElementById("ClienteId").value;
+                var nombreCliente = document.getElementById("Nombre Cliente").value;
                 var apellidos = document.getElementById("Apellidos").value;
                 var direccion = document.getElementById("Direccion").value;
                 var telefono = document.getElementById("TelefonoContacto").value;
@@ -344,8 +344,8 @@
             }
 
             var frm = new FormData();
-            frm.append("PacienteId", pacienteId);
-            frm.append("Nombre", nombre);
+            frm.append("ClienteId", ClienteId);
+            frm.append("Nombre Cliente", nombreCliente);
             frm.append("Apellidos", apellidos);
             frm.append("Direccion", direccion);
             frm.append("TelefonoContacto", telefono);
@@ -377,24 +377,24 @@
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (response) {
-                    $('#PacienteId').val(response.pacienteId);
-                    $('#Nombre').val(response.nombre);
+                    $('#ClienteId').val(response.ClienteId);
+                    $('#Nombre Cliente').val(response.nombreCliente);
                     $('#Apellidos').val(response.apellidos);
                     $('#Direccion').val(response.direccion);
                     $('#Cedula').val(response.cedula);
                     $('#Email').val(response.email);
-                    if (url == "/Paciente/Edit/") {
-                        $('#PacienteId').val(response.pacienteId);
-                        $('#Nombre').val(response.nombre);
+                    if (url == "/Cliente/Edit/") {
+                        $('#ClienteId').val(response.ClienteId);
+                        $('#Nombre Cliente').val(response.nombreCliente);
                         $('#Apellidos').val(response.apellidos);
                         $('#Direccion').val(response.direccion);
                         $('#Cedula').val(response.cedula);
                         $('#Email').val(response.email);
                         $('#Edit').modal('show');
                     }
-                    if (url == "/Paciente/Details/") {
-                        $('#pacienteId').val(response.pacienteId);
-                        $('#nombre').val(response.nombre);
+                    if (url == "/Cliente/Details/") {
+                        $('#ClienteId').val(response.ClienteId);
+                        $('#nombre Cliente').val(response.nombreCliente);
                         $('#apellidos').val(response.apellidos);
                         $('#direccion').val(response.direccion);
                         $('#Cedula').val(response.cedula);
@@ -409,24 +409,24 @@
             return false;
         }
 
-        function EliminarPaciente(PacienteId) {
-            document.getElementById("txtPacienteId").value = PacienteId;
-            verModal('Eliminar paciente',
-                '¿Desea eliminar el paciente '
-                + PacienteId + '?').then((result) => {
+        function EliminarCliente(ClienteId) {
+            document.getElementById("txtClienteId").value = ClienteId;
+            verModal('Eliminar Cliente',
+                '¿Desea eliminar el Cliente '
+                + ClienteId + '?').then((result) => {
                     if (result.value) {
                         var viewEliminar = document.getElementById("viewEliminar");
                         viewEliminar.submit();
                         Swal.fire(
                             'Eliminación!',
-                            'El paciente' + PacienteId + 'fue eliminado!.',
+                            'El Cliente' + ClienteId + 'fue eliminado!.',
                             'success'
                         )
                     }
                     else if (result.dismiss === Swal.DismissReason.cancel) {
                         Swal.fire(
                             'Cancelado',
-                            'El paciente' + PacienteId + 'no fue eliminado!!!:)',
+                            'El Cliente' + ClienteId + 'no fue eliminado!',
                             'error'
                         )
                     }

@@ -1,7 +1,101 @@
-﻿
+﻿@model IEnumerable<CitaGym>
+@using GYMIMFC.Models.ViewModels
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;
+              background-color:darkslategray;">
+            Lista de Citas
+        </h3>
+    </div>
+</div>
+<br />
+<div class="container">
+    <form asp-controller="Cita" asp-action="Index" method="post">
+        <div class="row">
+            <div class="col-md-2 col-lg-2 text-right">
+                <a asp-action="Create" class="btn btn-success fa fa-plus-circle"
+                   style="width:100%; height:90%;padding:6px;">
+                    Nueva cita
+                </a>
+            </div>
+            <div class="col-md-2 col-lg-2 text-right">
+                <a asp-controller="Home" asp-action="Index"
+                   class="btn btn-info fa fa-arrow-circle-left"
+                   style="width:100%; height:90%;padding:6px;">
+                    Regresar al menú
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12" style="color:black;"><hr /></div>
+    </form>
+</div>
+<div class="container">
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-hover .table-responsive" id="TbCitas">
+            <thead class="thead-dark">
+                <tr class="table-secondary" style="text-align:left;">
+                    <th>@Html.DisplayNameFor(m => m.CitaId)</th>
+                    <th>@Html.DisplayNameFor(m => m.NombreCliente)</th>
+                    <th>@Html.DisplayNameFor(m => m.NombreEmpleado)</th>
+                    <th>@Html.DisplayNameFor(m => m.NombreServicio)</th>
+                    <th>@Html.DisplayNameFor(m => m.FechaCita)</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:left;">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.CitaId)</td>
+                        <td>@Html.DisplayFor(m => item.NombreCliente)</td>
+                        <td>@Html.DisplayFor(m => item.NombreEmpleado)</td>
+                        <td>@Html.DisplayFor(m => item.NombreServicio)</td>
+                        <td>@Html.DisplayFor(model => item.FechaCita, "{0:dd/MM/yyyy}")
+                        <td>
+                            <a class="fa fa-trash btn btn-danger" aria-hidden="true"
+                               asp-controller="Citas" asp-action="Delete"
+                               asp-route-id="@item.CitaId"></a>
 
-<h1>Index</h1>
+                            <a class="fa fa-info-circle btn btn-primary" aria-hidden="true"
+                               asp-controller="Citas" asp-action="Details"
+                               asp-route-id="@item.CitaId"></a>
 
+                            <a class="fa fa-pencil btn btn-info" aria-hidden="true"
+                               asp-controller="Citas" asp-action="Edit"
+                               asp-route-id="@item.CitaId"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h5 style="color:red;">No se encontraron citas!...</h5>
+    }
+</div>
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+
+<script>
+        $(document).ready(function () {
+            $('#TbCitas').DataTable(
+                {
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    }
+                });
+        })
+        function verificar() {
+
+            var value = $('.dataTables_filter input').val();
+
+            alert(filtro);
+        }
+
+</script>

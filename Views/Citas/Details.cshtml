@@ -1,7 +1,100 @@
-﻿
+﻿@model IEnumerable<CitaGym>
+@using GYMIMFC.Models.ViewModels
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .fondo {
+        background-color: antiquewhite;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;
+                              background-color:darkslategray;width:100%;">
+            Detalles de cita 
+        </h3>
+    </div>
+</div>
+<br />
 
-<h1>Details</h1>
+<div class="container">
+    <form asp-controller="Cita" asp-action="Details">
+        <div class="backgroundWhiteBorder10Padding">
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Número cita asignada:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control fondo">
+                            @Html.DisplayFor(m => item.CitaId)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Fecha cita asignada:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control fondo">
+                            @Html.DisplayFor(m => item.FechaCita)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Identificación del Cliente:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control fondo">
+                            @Html.DisplayFor(m => item.ClienteId)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Nombre del Cliente:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control fondo">
+                            @Html.DisplayFor(m => item.NombreCliente)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Nombre Empleado encargado:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control fondo">
+                            @Html.DisplayFor(m => item.NombreEmpleado)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Servicio a ofrecer:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control fondo">
+                            @Html.DisplayFor(m => item.NombreServicio)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Comentario previo:</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 text-left form-control-textarea fondo">
+                            @Html.DisplayFor(m => item.Comentarios)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <a asp-action="Index" class="btn btn-success form-control"
+                               style="width: 80%;margin-left:50%;">Regresar a la lista</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h3>NO hay regsitros</h3>
+            }
 
+        </div>
+    </form>
+</div>

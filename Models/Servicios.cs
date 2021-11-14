@@ -17,13 +17,13 @@ namespace GYMIMFC.Models
             
         [Key]
         [DisplayName("ID")]
-        [Required(ErrorMessage = "Debe digitar el ID de la ënfermedad")]
+        //[Required(ErrorMessage = "Debe digitar el ID de la ënfermedad")]
         public int ServicioId { get; set; }
         [DisplayName("Nombre")]
-        [Required(ErrorMessage = "Debe digitar el nombre de la enfermedad")]
+        //[Required(ErrorMessage = "Debe digitar el nombre de la enfermedad")]
         public string Nombre { get; set; }
         [DisplayName("Descripcion")]
-        [Required(ErrorMessage = "Debe digitar la descripción de la ënfermedad")]
+        //[Required(ErrorMessage = "Debe digitar la descripción de la ënfermedad")]
         public string Descripcion { get; set; }
         public virtual Categoria Categoria { get; set; }
         public virtual ICollection<Cita> Cita { get; set; }

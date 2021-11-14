@@ -1,7 +1,127 @@
-﻿
+﻿@model IEnumerable<CitaGym>
+@using GYMIMFC.Models.ViewModels
 @{
     ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;
+                              background-color:darkslategray;width:100%;">
+            Eliminar cita médica
+        </h3>
+    </div>
+</div>
+<br />
 
+<div class="container">
+    <form asp-controller="Cita" asp-action="Delete" id="viewAgregar">
+        <div class="backgroundWhiteBorder10Padding">
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Número cita asignada:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.CitaId)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Fecha cita asignada:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.FechaCita)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Identificación del Cliente:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.ClienteId)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Nombre del paciente:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.NombreCliente)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Nombre del empleado engargado:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.NombreEmpleado)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Servicios Empleados:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.NombreServicio)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-4 text-right">
+                            <label>Comentario previo:</label>
+                        </div>
+                        <div class="col-md-8 col-lg-8 text-left">
+                            @Html.DisplayFor(m => item.Comentarios)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <input type="button" value="Eliminar" id="btnEliminar"
+                                   class="fa fa-trash btn btn-danger" style="width: 80%; margin-left:40%;"
+                                   onclick="abrirModal()" />
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-action="Index" class="btn btn-success form-control"
+                               style="width: 80%;margin-left:5%;">Regresar a la lista</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h3>NO hay regsitros</h3>
+            }
+        </div>
+    </form>
+</div>
+<form asp-action="Delete" asp-controller="Cita" method="post" id="viewEliminar">
+    <input type="hidden" id="txtCitaId" name="CitaId" />
+</form>
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+<script>
+        function abrirModal() {
+            verModal('Eliminación', '¿Desea eliminar esta cita?').then((result) => {
+                if (result.value) {
+                    var viewEliminar = document.getElementById("viewEliminar");
+                    viewEliminar.submit();
+                    Swal.fire(
+                        'Eliminado!',
+                        'La cita fue eliminada!.',
+                        'success'
+                    )
+                }
+                else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                        'Cancelado',
+                        'La cita no fue eliminada!!!:)',
+                        'error'
+                    )
+                }
+            })
+        }
+</script>
