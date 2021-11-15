@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Servicios>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String nombreServicio = ViewBag.Servicio;
+}
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+            Lista de Servicios
+        </h3>
+    </div>
+</div>
+<div class="container">
+    <form asp-controller="Servicios" asp-action="Index" method="post" id="frmIndex">
+        <div class="row">
+            <br />
+            <div class="col-md-3 col-lg-3 text-right">
+                <input type="button" value="Generar PDF"
+                       class="btn btn-primary" style="width: 100%;
+                           height:100%;padding:6px;"
+                       onclick="ExportarPDF()" />
+            </div>
+            <div class="col-md-3 colo-lg-3 text-right">
+                <a asp-controller="Home" asp-action="Index"
+                   class="btn btn-info fa fa fa-arrow-circle-left"
+                   style="width: 100%; height:100%;padding:6px;">
+                    Cerrar
+                </a>
+            </div>
+            <div class="col-md-12" style="color:black;"><hr></div>
+        </div>
+        @*fin fila 0*@
+
+
+        <div class="row">
+            <div class="col-3" style="font-size:larger;">
+                <label class="col-form-label">Filtrar por servicios :</label>
+            </div>
+            <div class="col-9 text-right">
+                <partial name="_Filter" />
+            </div>
+        </div>
+    </form>
+    @if (Model.Count() > 0)
+    {
+        <div class="backgroundWhiteBorder10Padding">
+            <table class="table table-hover .table-responsive" id="TbServicios">
+                <thead class="thead-dark">
+                    <tr class="table-secondary" id="head">
+                        <th>@Html.DisplayNameFor(m => m.ServicioId)</th>
+                        <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                        <th>@Html.DisplayNameFor(m => m.Descripcion)</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:left;">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => item.ServicioId)</td>
+                            <td>@Html.DisplayFor(m => item.Nombre)</td>
+                            <td>
+                                @Html.DisplayFor(m => item.Descripcion)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h5 style="color:red;">No se encontraron especialidades!...</h5>
+    }
+
+</div>
+<form asp-action="exportarPDF" target="_blank"
+      asp-controller="Especialidad"
+      method="post" id="viewExportarPDF">
+    @*solo sirve para ejecutar el actionresult*@
+</form>
+
+
+@*code load https://cdn.jsdelivr.net/npm/sweetalert2@11*@
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+
+<script>
+    function ExportarPDF() {
+        var aux = document.getElementById("viewExportarPDF");
+        aux.submit();
+    }
+</script>
+
