@@ -1,0 +1,86 @@
+﻿@model Servicios
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+            Modificación del Servicio
+        </h3>
+    </div>
+</div>
+<br />
+<div class="container">
+    <form asp-action="Edit" method="post" id="viewEditar">
+        <br />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-md-2 col-lg-2 text-left">
+                <label asp-for="ServicioId" class="col-form-label"></label>
+            </div>
+            <div class="col-md-2 col-lg-2 text-left">
+                <input asp-for="ServicioId" readonly="readonly" class="form-control" />
+            </div>
+            <span asp-validation-for="ServicioId" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2 col-lg-2 text-left">
+                <label asp-for="Nombre" class="col-form-label"></label>
+            </div>
+            <div class="col-md-2 col-lg-2 text-left">
+                <input asp-for="Nombre" class="form-control" />
+            </div>
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2 col-lg-2 text-left">
+                <label asp-for="Descripcion" class="col-form-label"></label>
+            </div>
+            <div class="col-md-6 col-lg-6 text-left">
+                <textarea asp-for="Descripcion" rows="4" cols="50"
+                          class="form-control"> </textarea>
+            </div>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4 col-lg-4 text-right">
+                <input type="button" value="Editar" id="btnAgregar"
+                       class="btn btn-success" style="width: 80%;"
+                       onclick="abrirModal()" />
+            </div>
+            <div class="col-md-4 col-lg-4 text-right">
+                <a asp-action="Index" class="btn btn-info"
+                   style="width: 80%;">
+                    Regresar
+                </a>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+<script>
+    function abrirModal() {
+        verModal('Modificar Servicio', '¿Desea modificar el Servicio?').then((result) => {
+            if (result.value) {
+                var viewEditar = document.getElementById("viewEditar");
+                viewEditar.submit();
+                Swal.fire(
+                    'Modificado!',
+                    'El Servicio fue modificado!',
+                    'success'
+                )
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelado',
+                    'El Servicio no fue modificado!!!:)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
