@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Categoria>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+                Consulta de Categorias
+            </h3>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-2 col-lg-2">
+            <label>Buscar categoria:</label>
+        </div>
+        <div class="col-md-2 col-lg-2 text-right">
+            <input type="text" class="form-control" name="nombre" id="nombre"
+                   style="width: 100%;height:100%;"
+                   value="@ViewBag.Categoria" />
+        </div>  <br />
+        <div class="col-md-2 col-lg-2 text-right">
+            <input type="button" value="Buscar" class="btn btn-success"
+                   onclick="Buscar()"
+                   style="width: 100%;height:100%;" />
+        </div>  <br />
+        <div class="col-md-2 colo-lg-2 text-right">
+            <input type="button" value="Resetear" class="btn btn-danger"
+                   onclick="Resetear()" style="width: 100%;height: 100%;" />
+        </div><br />
+
+        <div class="col-md-2 col-lg-2 text-right">
+            <input type="button" value="Generar PDF" class="btn btn-primary" onclick="ExportarPDF()" />
+        </div>
+        <div class="col-md-2 col-lg-2 text-right">
+            <input type="button" value="Generar Excel" class="btn btn-primary" onclick="ExportarExcel()" />
+        </div>
+    </div>
+    @*</form>*@
+    <br />
+    <div class="backgroundWhiteBorder10Padding">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-hover" id="tbDatos">
+                <thead class="thead-dark">
+                    <tr class="table-secondary">
+                        <th>@Html.DisplayNameFor(m => m.NombreCategoria)</th>
+                        <th>@Html.DisplayNameFor(m => m.Descripcion)</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody id="tbDatos" style="text-align:left;">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => item.NombreCategoria)</td>
+                            <td>@Html.DisplayFor(m => item.Descripcion)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h5 style="color:red;">No se encontraron categorias!...</h5>
+        }
+    </div>
+</div>
+
+<form asp-action="exportarPDF" target="_blank" asp-controller="ConsultaCategoria"
+      method="post" id="viewExportarPDF">
+    @*solo sirve para ejecutar el actionresult*@
+</form>
+<form asp-action="exportarExcel" asp-controller="ConsultaCategoria"
+      method="post" id="viewExportarExcel">
+    @*solo sirve para ejecutar el actionresult*@
+</form>
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+@*//alert(JSON.stringify(data));*@
+<script>
+
+    function Buscar() {
+        var nombre = document.getElementById("nombre").value;
+        var url = "ConsultaCategoria/BuscarCategoria/?nombreCategoria=" + nombre;
+        var tbody = document.getElementById("tbDatos");
+        var campos = new Array("nombre", "descripcion");
+        pintarPantallaConsulta(url,campos,tbody);
+    }
+    function Resetear() {
+        document.getElementById("nombre").value = "";
+        Buscar();
+    }
+    function ExportarPDF() {
+        var aux = document.getElementById("viewExportarPDF");
+        aux.submit();
+    }
+    function ExportarExcel() {
+        var aux = document.getElementById("viewExportarExcel");
+        aux.submit();
+    }
+</script>

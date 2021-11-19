@@ -31,7 +31,7 @@ namespace GYMIMFC
 
             //services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DBConn")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSession();
             //services.AddScoped<Seguridad>();
             services.AddControllersWithViews();

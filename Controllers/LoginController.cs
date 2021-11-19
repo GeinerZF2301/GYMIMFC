@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GYMIMFC.Models;
 using GYMIMFC.Migrations;
-using GYMIMFC.Models;
+
 
 namespace GYMIMFC.Controllers
 {
