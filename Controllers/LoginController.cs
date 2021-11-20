@@ -36,8 +36,8 @@ namespace GYMIMFC.Controllers
                             && u.Password == claveCifrada).First();
                     //HttpContext.Session.SetString("usuarioId", User.UsuarioId.ToString());
                     if (User.TipoUsuarioId == 1) SD.Admin = true;
-                    if (User.TipoUsuarioId == 2) SD.Registrador = true;
-                    if (User.TipoUsuarioId == 3) SD.Citas = true;
+                    if (User.TipoUsuarioId == 2) SD.Citas = true;
+                    if (User.TipoUsuarioId == 3) SD.Registrador = true;
                     if (User.TipoUsuarioId == 4) SD.Consultas = true;
                     SD.NombreUsuario = User.Nombre;
 

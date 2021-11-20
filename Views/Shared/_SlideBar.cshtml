@@ -9,7 +9,7 @@
         <img src="~/adminlte/dist/img/Logo (2).png" alt=" "
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-bolder">Clinica ACME</span>
+        <span class="brand-text font-weight-bolder">GYM IMFC</span>
     </a>
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -32,38 +32,38 @@
                         {
 
                             <li class="nav-item">
-                                <a asp-area="" asp-controller="Especialidad"
+                                <a asp-area="" asp-controller="Servicios"
                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-stethoscope"></i>
-                                    <p>Especialidades</p>
+                                    <p>Servicios</p>
                                 </a>
                             </li>
 
 
                             <li class="nav-item">
-                                <a asp-area="" asp-controller="Enfermedades"
+                                <a asp-area="" asp-controller="Categorias"
                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-user-nurse"></i>
-                                    <p>Enfermedades</p>
+                                    <p>Categorias</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a asp-area="" asp-controller="Medico"
+                                <a asp-area="" asp-controller="Empleados"
                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-user-md"></i>
-                                    <p>Médicos</p>
+                                    <p>Empleados</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a asp-area="" asp-controller="Paciente"
+                                <a asp-area="" asp-controller="Clientes"
                                    asp-action="Index" class="nav-link">
                                     <i class="far fa-ambulance"></i>
-                                    <p>Pacientes</p>
+                                    <p>Clientes</p>
                                 </a>
                             </li>
                         }
-                        @if (SD.Admin || SD.Citas)
+                        @if (SD.Citas)
                         {
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Citas"
@@ -89,33 +89,33 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="ConsultaEspecialidades"
+                            <a asp-area="" asp-controller="ConsultaServicio"
                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-id-card-alt"></i>
-                                <p>Especialidades</p>
+                                <p>Servicios</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="ConsultaEnfermedades"
+                            <a asp-area="" asp-controller="ConsultaCategoria"
                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-address-card"></i>
-                                <p>Enfermedades</p>
+                                <p>Categoria</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link">
                                 <i class="fas fa-user-nurse"></i>
-                                <p>Médicos</p>
+                                <p>Empleado</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link">
                                 <i class="fas fa-users-cog"></i>
-                                <p>Pacientes</p>
+                                <p>Cliente</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="ConsultaCitas"
+                            <a asp-area="" asp-controller="ConsultaCita"
                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-address-card"></i>
                                 <p>Citas</p>
@@ -129,7 +129,7 @@
 
 
 
-            @if (SD.Registrador)
+            @if (SD.Registrador || SD.Admin) 
             {
                 <li class="nav-item has-treeview menu-close">
                     <a href="#" class="nav-link active">

@@ -1,7 +1,9 @@
 ﻿
 @model IEnumerable<TipoUsuario>
-@{ ViewData["Title"] = "Index";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+@using GYMIMFC.Models.ViewModels
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 <form id="frmEnviar" asp-controller="TipoUsuarios" asp-action="Index" method="post">
 </form>
 <div class="container">
@@ -34,47 +36,48 @@
 <div class="container">
     @if (Model.Count() > 0)
     {
-<div class="backgroundWhiteBorder10Padding">
-    <table class="table table-hover .table-responsive" id="tbDatos">
-        <thead class="thead-dark">
-            <tr class="table-secondary" id="head">
-                <th>@Html.DisplayNameFor(m => m.TipoUsuarioId)</th>
-                <th>@Html.DisplayNameFor(m => m.Nombre)</th>
-                <th>Operaciones</th>
-            </tr>
-        </thead>
-        <tbody style="text-align:left;">
-            @foreach (var item in Model)
-            {
-<tr>
-    <td>@Html.DisplayFor(m => item.TipoUsuarioId)</td>
-    <td>@Html.DisplayFor(m => item.Nombre)</td>
-    <td style="width:15%;">
-        <button type="button" id="btnDelete" class="fa fa-trash btn btn-danger"
-                onClick="EliminarTipoUsuario(@item.TipoUsuarioId)"
-                nombre="@item.Nombre">
-        </button>
+        <div class="backgroundWhiteBorder10Padding">
+            <table class="table table-hover .table-responsive" id="tbDatos">
+                <thead class="thead-dark">
+                    <tr class="table-secondary" id="head">
+                        <th>@Html.DisplayNameFor(m => m.TipoUsuarioId)</th>
+                        <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:left;">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => item.TipoUsuarioId)</td>
+                            <td>@Html.DisplayFor(m => item.Nombre)</td>
+                            <td style="width:15%;">
+                                <button type="button" id="btnDelete" class="fa fa-trash btn btn-danger"
+                                        onClick="EliminarTipoUsuario(@item.TipoUsuarioId)"
+                                        nombre="@item.Nombre">
+                                </button>
 
-        <button type="button" id="btnDetails"
-                class="fa fa-info-circle btn btn-info"
-                onClick="ObtenerDetalles(@item.TipoUsuarioId)"
-                name='Details'
-                url='/TipoUsuarios/Details/'>
-        </button>
+                                <button type="button" id="btnDetails"
+                                        class="fa fa-info-circle btn btn-info"
+                                        onClick="ObtenerDetalles(@item.TipoUsuarioId)"
+                                        name='Details'
+                                        url='/TipoUsuarios/Details/'>
+                                </button>
 
-        <button type="button" id="btnEdit" class="fa fa-pencil btn btn-info"
-                onClick="ObtenerDetalles(@item.TipoUsuarioId)"
-                name='Edit'
-                url='/TipoUsuarios/Edit/'>
-        </button>
-    </td>
-</tr>}
-        </tbody>
-    </table>
-</div> }
-            else
-            {
-<h5 style="color:red;">No se encontraron roles de usuarios!...</h5>}
+                                <button type="button" id="btnEdit" class="fa fa-pencil btn btn-info"
+                                        onClick="ObtenerDetalles(@item.TipoUsuarioId)"
+                                        name='Edit'
+                                        url='/TipoUsuarios/Edit/'>
+                                </button>
+                            </td>
+                        </tr>
+}
+                </tbody>
+            </table>
+        </div> }
+    else
+    {
+        <h5 style="color:red;">No se encontraron roles de usuarios!...</h5>}
 
 </div>
 <form asp-action="Delete" asp-controller="TipoUsuarios" method="post" id="viewEliminar">
@@ -210,95 +213,96 @@
 <script src="~/js/sweetalert2.js"></script>
 <script src="~/js/Utilitarios.js"></script>
 
-<script>$(document).ready(function () {
-            $('#tbDatos').DataTable(
-                {
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                    }
-                });
-        })
-        function Actualizar(url) {
-            if (url == "TipoUsuarios/Create") {
-                var tipousuarioId = document.getElementById("txtTipousuarioId").value;
-                var nombre = document.getElementById("txtnombre").value;
-                var bHabilitado = 1;
-            }
-            else {
-                var tipousuarioId = document.getElementById("tipoUsuarioId").value;
-                var nombre = document.getElementById("nombre").value;
-                var bHabilitado = 1;
-            }
-
-            var frm = new FormData();
-            frm.append("TipoUsuarioId", tipousuarioId);
-            frm.append("Nombre", nombre);
-            frm.append("Bhabilitado", bHabilitado);
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: frm,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    if (data == "OK") {
-                        correcto("Se actualizó correctamente el tipo de usuario!");
-                        document.getElementById("btnCancelar").click();
-                        document.getElementById("frmEnviar").submit();
-                    }
-                    else {
-                        error("Ocurrió un error, por favor verifique!");
-                    }
-                }
-            })
-        }
-
-        function ObtenerDetalles(id) {
-            let url = event.target.getAttribute('url');
-            $.ajax({
-                url: url + id,
-                typr: "GET",
-                contentType: "application/json;charset=UTF-8",
-                dataType: "json",
-                success: function (response) {
-                    if (url == "/TipoUsuarios/Edit/") {
-                        $('#tipoUsuarioId').val(response.tipoUsuarioId);
-                        $('#nombre').val(response.nombre);
-                        $('#Edit').modal('show');
-                    }
-                    if (url == "/TipoUsuarios/Details/") {
-                        $('#tipousuarioId').val(response.tipoUsuarioId);
-                        $('#name').val(response.nombre);
-                        $('#Details').modal('show');
-                    }
-                },
-                error: function (response) {
-                    error(response.responseText);
+<script>
+    $(document).ready(function () {
+        $('#tbDatos').DataTable(
+            {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 }
             });
-            return false;
+    })
+    function Actualizar(url) {
+        if (url == "TipoUsuarios/Create") {
+            var tipousuarioId = document.getElementById("txtTipousuarioId").value;
+            var nombre = document.getElementById("txtnombre").value;
+            var bHabilitado = 1;
+        }
+        else {
+            var tipousuarioId = document.getElementById("tipoUsuarioId").value;
+            var nombre = document.getElementById("nombre").value;
+            var bHabilitado = 1;
         }
 
-        function EliminarTipoUsuario(TipoUsuarioId) {
-            document.getElementById("txtTipoUsuarioId").value = TipoUsuarioId;
-            verModal('Eliminar tipo de usuario',
-                '¿Desea eliminar el tipo de usuario '
-                + TipoUsuarioId + '?').then((result) => {
-                    if (result.value) {
-                        var viewEliminar = document.getElementById("viewEliminar");
-                        viewEliminar.submit();
-                        Swal.fire(
-                            'Eliminación!',
-                            'El tipo de usuario ' + TipoUsuarioId + ' fue eliminado!.',
-                            'success'
-                        )
-                    }
-                    else if (result.dismiss === Swal.DismissReason.cancel) {
-                        Swal.fire(
-                            'Cancelado',
-                            'El tipo de usuario no fue eliminado!!!:)',
-                            'error'
-                        )
-                    }
-                })
-        }</script>
+        var frm = new FormData();
+        frm.append("TipoUsuarioId", tipousuarioId);
+        frm.append("Nombre", nombre);
+        frm.append("Bhabilitado", bHabilitado);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: frm,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data == "OK") {
+                    correcto("Se actualizó correctamente el tipo de usuario!");
+                    document.getElementById("btnCancelar").click();
+                    document.getElementById("frmEnviar").submit();
+                }
+                else {
+                    error("Ocurrió un error, por favor verifique!");
+                }
+            }
+        })
+    }
+
+    function ObtenerDetalles(id) {
+        let url = event.target.getAttribute('url');
+        $.ajax({
+            url: url + id,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (response) {
+                if (url == "/TipoUsuarios/Edit/") {
+                    $('#tipoUsuarioId').val(response.tipoUsuarioId);
+                    $('#nombre').val(response.nombre);
+                    $('#Edit').modal('show');
+                }
+                if (url == "/TipoUsuarios/Details/") {
+                    $('#tipousuarioId').val(response.tipoUsuarioId);
+                    $('#name').val(response.nombre);
+                    $('#Details').modal('show');
+                }
+            },
+            error: function (response) {
+                error(response.responseText);
+            }
+        });
+        return false;
+    }
+
+    function EliminarTipoUsuario(TipoUsuarioId) {
+        document.getElementById("txtTipoUsuarioId").value = TipoUsuarioId;
+        verModal('Eliminar tipo de usuario',
+            '¿Desea eliminar el tipo de usuario '
+            + TipoUsuarioId + '?').then((result) => {
+                if (result.value) {
+                    var viewEliminar = document.getElementById("viewEliminar");
+                    viewEliminar.submit();
+                    Swal.fire(
+                        'Eliminación!',
+                        'El tipo de usuario ' + TipoUsuarioId + ' fue eliminado!.',
+                        'success'
+                    )
+                }
+                else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                        'Cancelado',
+                        'El tipo de usuario no fue eliminado!!!:)',
+                        'error'
+                    )
+                }
+            })
+    }</script>

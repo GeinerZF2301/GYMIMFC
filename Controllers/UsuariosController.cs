@@ -7,6 +7,7 @@ using GYMIMFC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GYMIMFC.Models.ViewModels;
 using GYMIMFC.Migrations;
+using GYMIMFC.Filter;
 
 namespace GYMIMFC.Controllers
 {

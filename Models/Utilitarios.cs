@@ -40,7 +40,7 @@ namespace GYMIMFC.Models
                 using (var pdfDoc = new PdfDocument(writer))
                 {
                     Document doc = new Document(pdfDoc);
-                    Text Texto = new Text("Clínica ACME")
+                    Text Texto = new Text("GYM IMFC")
                     .SetFontColor(ColorConstants.RED)
                     .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA));
                     Paragraph p0 = new Paragraph(Texto);

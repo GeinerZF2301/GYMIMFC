@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GYMIMFC.Migrations;
-namespace Klinica.Controllers
+namespace GYMIMFC.Controllers
 {
-    public class ConsultaEnfermedadesController : Controller
+    public class ConsultaCategoria : Controller
     {
         private readonly ApplicationDbContext _db;
         List<Categoria> lista = new List<Categoria>();
-        public ConsultaEnfermedadesController(ApplicationDbContext db)
+        public ConsultaCategoria(ApplicationDbContext db)
         {
             _db = db;
         }

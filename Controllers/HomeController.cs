@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace GYMIMFC.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,9 +21,8 @@ namespace GYMIMFC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
         }
-
         public IActionResult Privacy()
         {
             return View();
