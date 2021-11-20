@@ -1,0 +1,92 @@
+﻿@model Categoria
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String Error = @ViewBag.msgError;
+}
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+            Agregar nueva Categoria
+        </h3>
+    </div>
+</div>
+<br />
+<div class="container">
+    <form asp-action="Create" method="post" id="viewAgregar">
+        <div class="backgroundWhiteBorder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="idCategoria" class="col-form-label"></label>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="idCategoria" value="@ViewBag.ID"
+                           readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="idCategoria" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="NombreCategoria" class="col-form-label"></label>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="NombreCategoria" class="form-control" />
+                </div>
+                <span asp-validation-for="NombreCategoria" class="text-danger"></span>
+                @if (@Error != null && @Error != "")
+                {
+                    <p class="text-danger">@Error</p>
+                }
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="Descripcion" class="col-form-label"></label>
+                </div>
+                <div class="col-md-6">
+                    <textarea asp-for="Descripcion" rows="4" cols="50" class="form-control"> </textarea>
+                </div>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4 colo-lg-4 text-right">
+                    <input type="button" value="Agregar" id="btnAgregar"
+                           class="btn btn-success" style="width: 80%;"
+                           onclick="abrirModal()" />
+                </div>
+                <div class="col-md-4 colo-lg-4 text-right">
+                    <a asp-action="Index" class="btn btn-info"
+                       style="width: 80%;">
+                        Regresar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+<script>
+    function abrirModal() {
+        verModal('Agregar categoria', '¿Desea guardar la categoria?').then((result) => {
+            if (result.value) {
+                var viewAgregar = document.getElementById("viewAgregar");
+                viewAgregar.submit();
+                Swal.fire(
+                    'Agregado!',
+                    'La categoria fue agregada!.',
+                    'success'
+                )
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelado',
+                    'La categoria no fue agregada!!!:)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>

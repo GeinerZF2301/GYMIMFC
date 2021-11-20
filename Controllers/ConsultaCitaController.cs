@@ -30,32 +30,32 @@ namespace GYMIMFC.Controllers
 
             if ((_FechaInicio == "01-01-0001") || (_FechaFinal == "01-01-0001"))
             {
-                listaCitas = (from cita in _db.Cita
-                              join Cliente in _db.Cliente
-                              on cita.clienteId equals
-                              Cliente.ClienteId
+                listaCitas = (from citas in _db.Cita
+                              join Clientes in _db.Cliente
+                              on citas.clienteId equals
+                              Clientes.ClienteId
 
                               join Empleado in _db.Empleado
-                              on cita.EmpleadoId equals
+                              on citas.EmpleadoId equals
                               Empleado.EmpleadoId
 
                               join Servicios in _db.Servicios
-                              on cita.ServicioId equals
+                              on citas.ServicioId equals
                               Servicios.ServicioId
-                              orderby (cita.FechaCita)
+                              orderby (citas.FechaCita)
 
                               select new CitaGym
                               {
-                                  CitaId = cita.citaId,
-                                  NombreCliente = Cliente.nombreCliente +
-                                              " " + Cliente.Apellidos,
+                                  CitaId = citas.citaId,
+                                  NombreCliente = Clientes.nombreCliente +
+                                              " " + Clientes.Apellidos,
                                   EmpleadoId = Empleado.EmpleadoId,
                                   NombreEmpleado = Empleado.Nombre + " " + Empleado.Apellidos,
                                   NombreServicio = Servicios.Nombre,
-                                  FechaCita = cita.FechaCita
+                                  FechaCita = citas.FechaCita
                               }).ToList();
                 //{7/8/2021 00:00:00}
-                var oCita =
+                var ocita =
                 _db.Set<Cita>()
                 .OrderByDescending(t => t.FechaCita)
                 .LastOrDefault();
@@ -66,12 +66,12 @@ namespace GYMIMFC.Controllers
                           .FirstOrDefault();
 
                 String strDia, strMes, strFecha;
-                strDia = oCita.FechaCita.Day.ToString();
-                strMes = oCita.FechaCita.Month.ToString();
+                strDia = ocita.FechaCita.Day.ToString();
+                strMes = ocita.FechaCita.Month.ToString();
 
                 if (strDia.Length == 1) strDia = "0" + strDia;
                 if (strMes.Length == 1) strMes = "0" + strMes;
-                strFecha = oCita.FechaCita.Year.ToString() + "-" +
+                strFecha = ocita.FechaCita.Year.ToString() + "-" +
                                          strMes + "-" + strDia;
                 ViewBag.fechaInicio = strFecha;
                 //2021-08-07
@@ -86,32 +86,32 @@ namespace GYMIMFC.Controllers
             }
             else
             {
-                listaCitas = (from cita in _db.Cita
+                listaCitas = (from citas in _db.Cita
 
-                              join Cliente in _db.Cliente
-                              on cita.clienteId equals
-                              Cliente.ClienteId
+                              join Clientes in _db.Cliente
+                              on citas.clienteId equals
+                              Clientes.ClienteId
 
                               join Empleado in _db.Empleado
-                              on cita.EmpleadoId equals
+                              on citas.EmpleadoId equals
                               Empleado.EmpleadoId
 
                               join Servicios in _db.Servicios
-                              on cita.ServicioId equals
+                              on citas.ServicioId equals
                               Servicios.ServicioId
 
-                              where (cita.FechaCita >= FechaInicio
-                                  && cita.FechaCita <= FechaFinal)
+                              where (citas.FechaCita >= FechaInicio
+                                  && citas.FechaCita <= FechaFinal)
 
                               select new CitaGym
                               {
-                                  CitaId = cita.citaId,
-                                  NombreCliente = Cliente.nombreCliente +
-                                              " " + Cliente.Apellidos,
+                                  CitaId = citas.citaId,
+                                  NombreCliente = Clientes.nombreCliente +
+                                              " " + Clientes.Apellidos,
                                   EmpleadoId = Empleado.EmpleadoId,
                                   NombreEmpleado = Empleado.Nombre + " " + Empleado.Apellidos,
                                   NombreServicio = Servicios.Nombre,
-                                  FechaCita = cita.FechaCita
+                                  FechaCita = citas.FechaCita
                               }).ToList();
                 ViewBag.fechaInicio = FechaInicio.ToString("yyyy-MM-dd");
                 ViewBag.fechaFinal = FechaFinal.ToString("yyyy-MM-dd");

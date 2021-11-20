@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<Cliente>
-@{ ViewData["Title"] = "Index";
-                Layout = "~/Views/Shared/_Layout.cshtml";
-                var Error = ViewBag.Error; 
+@{ 
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Error = ViewBag.Error;
+    
  }
 <form id="frmEnviar" asp-controller="Cliente" asp-action="Index" method="post">
 </form>
@@ -358,7 +360,7 @@
                 processData: false,
                 success: function (data) {
                     if (data == "OK") {
-                        correcto("Se actualizó correctamente el paciente!");
+                        correcto("Se actualizó correctamente el Cliente!");
                         document.getElementById("btnCancelar").click();
                         document.getElementById("frmEnviar").submit();
                     }

@@ -35,7 +35,6 @@ namespace GYMIMFC.Controllers
                           join servicios in _db.Servicios
                           on citas.ServicioId equals
                           servicios.ServicioId
-
                           select new CitaGym
                           {
                               CitaId = citas.citaId,
@@ -66,9 +65,9 @@ namespace GYMIMFC.Controllers
 
         private void cargarEmpleados()
         {
-            List<SelectListItem> listaMedicos = new List<SelectListItem>();
-            listaMedicos = (from empleado in _db.Empleado
-                            orderby empleado.Nombre
+            List<SelectListItem> listaEmpleado = new List<SelectListItem>();
+            listaEmpleado = (from empleado in _db.Empleado
+                            orderby empleado.Apellidos
                             join servicios in _db.Servicios
                             on empleado.ServicioId equals servicios.ServicioId
                             select new SelectListItem
@@ -78,17 +77,26 @@ namespace GYMIMFC.Controllers
                                 Value = empleado.EmpleadoId
                             }
                                    ).ToList();
-            ViewBag.ListaMedicos = listaMedicos;
+            ViewBag.listaEmpleado = listaEmpleado;
         }
-        [HttpGet]
-        public IActionResult Create(string PacienteId)
+        private void DeterminarFecha()
+        {
+            String strFecha = DateTime.Now.ToString();
+            //"23/05/2021 0:00:00"
+            //"2021-05-23"
+            strFecha = strFecha.Substring(6, 4) + "-" + strFecha.Substring(3, 2) +
+                       "-" + strFecha.Substring(0, 2);
+            ViewBag.Fecha = strFecha;
+        }
+        public IActionResult Create(string clienteid)
         {
             cargarEmpleados();
             DeterminarUltimoRegistro();
-            if (PacienteId != null)
+            if (clienteid != null)
             {
-                BuscarCliente(PacienteId);
+                BuscarCliente(clienteid);
             }
+            DeterminarFecha();
             ViewBag.Controlador = "Citas";
             ViewBag.Accion = "Create";
             return View();
@@ -129,14 +137,14 @@ namespace GYMIMFC.Controllers
 
         private int buscarServicio(string empleadoId)
         {
-            int especialidadID = 0;
+            int ServicioId = 0;
             Empleado oEmpleado = _db.Empleado
                 .Where(e => e.EmpleadoId == empleadoId).SingleOrDefault();
             if (oEmpleado != null)
             {
-                especialidadID = oEmpleado.ServicioId;
+                ServicioId = oEmpleado.ServicioId;
             }
-            return especialidadID;
+            return ServicioId;
         }
         private void buscarCita(int Id)
         {
@@ -189,7 +197,7 @@ namespace GYMIMFC.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        [HttpPost]
+        
         public async Task<IActionResult> Created(CitaGym cita)
         {
             try
@@ -220,10 +228,11 @@ namespace GYMIMFC.Controllers
             //para seguir agregando citas
             cargarEmpleados();
             DeterminarUltimoRegistro();
+            DeterminarFecha();
             return View("Create");
 
         }
-        [HttpGet]
+        
         public IActionResult Edit(int Id)
         {
             buscarCita(Id);
@@ -240,7 +249,7 @@ namespace GYMIMFC.Controllers
                 _citaGym.NombreServicio = item.NombreServicio;
                 _citaGym.Comentarios = item.Comentarios;
             }
-            ViewBag.Medico = _citaGym.EmpleadoId;
+            ViewBag.Empleado = _citaGym.EmpleadoId;
             ViewBag.FechaCita = _citaGym.FechaCita.ToString("yyyy-MM-dd");
             _Fecha = ViewBag.FechaCita;
             cargarEmpleados();

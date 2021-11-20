@@ -8,6 +8,11 @@ namespace GYMIMFC.Models
 {
     public class Cliente
     {
+        public Cliente()
+        {
+            Cita = new HashSet<Cita>();
+        }
+
         [Key]
         [Display(Name = "ID Ciente ")]
         [MaxLength(100)]

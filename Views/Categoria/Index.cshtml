@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Categoria>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String nombreCategoria = ViewBag.Categoria;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
+                Lista de categorias
+            </h3>
+        </div>
+    </div>
+    <form asp-controller="Categoria" asp-action="Index" method="post" id="frmFilter">
+        <div class="row">
+            <div class="col-md-2 col-lg-2 text-right">
+                <a asp-action="Create" class="btn btn-success fa fa-plus-circle"
+                   style="width: 100%; height:100%;padding:6px;">
+                    Nuevo
+                </a>
+            </div>
+            <br />
+            @*<div class="col-md-2 col-lg-2 text-right">
+                    <input type="button" value="Imprimir" class="btn btn-primary" onclick="Imprimir()" />
+                </div>
+                <div class="col-md-2 col-lg-2 text-right">
+                    <input type="button" value="Generar PDF" class="btn btn-primary" onclick="ExportarPDF()" />
+                </div>*@
+            <div class="col-md-2 colo-lg-2 text-right">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-info fa fa fa-arrow-circle-left"
+                   style="width: 100%; height:100%;padding:6px;">
+                    Regresar al menú
+                </a>
+            </div>
+            <div class="col-md-12" style="color:black;"><hr></div>
+        </div>
+    </form>
+    @if (Model.Count() > 0)
+    {
+        <div class="backgroundWhiteBorder10Padding">
+            <table class="table table-hover .table-responsive" id="TbEspecial">
+                <thead class="thead-dark">
+                    <tr class="table-secondary" id="head">
+                        <th>@Html.DisplayNameFor(m => m.idCategoria)</th>
+                        <th>@Html.DisplayNameFor(m => m.NombreCategoria)</th>
+                        <th>@Html.DisplayNameFor(m => m.Descripcion)</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:left;">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => item.idCategoria)</td>
+                            <td>@Html.DisplayFor(m => item.NombreCategoria)</td>
+                            <td>
+                                @Html.DisplayFor(m => item.Descripcion)
+                            </td>
+                            <td style="width:15%;">
+                                <i class="fa fa-trash btn btn-danger" aria-hidden="true"
+                                   onclick="EliminarCategoria(@item.idCategoria)"></i>
+                                <a class="fa fa-info-circle btn btn-primary" aria-hidden="true"
+                                   asp-controller="Categorias" asp-action="Details"
+                                   asp-route-id="@item.idCategoria"></a>
+                                <a class="fa fa-pencil btn btn-info" aria-hidden="true"
+                                   asp-controller="categorias" asp-action="Edit"
+                                   asp-route-id="@item.idCategoria"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h5 style="color:red;">No se encontraron Servicios!...</h5>
+    }
+
+</div>
+
+<form asp-action="Delete" asp-controller="Categoria" method="post" id="viewEliminar">
+    <input type="hidden" id="txtCategoriaId" name="CategoriaId" />
+</form>
+<form asp-action="Edit" asp-controller="Categoria" method="post" id="viewEditar">
+    <input type="hidden" id="txtCategoriaId" name="CategoriaId" />
+</form>
+
+
+<script src="~/js/sweetalert2.js"></script>
+<script src="~/js/Utilitarios.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#TbEspecial').DataTable(
+            {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+            });
+    })
+
+    function EliminarServicio(ServicioId) {
+        document.getElementById("txtCategoriaId").value = ServicioId;
+        verModal('Eliminar Categoria',
+            '¿Desea eliminar la Categoria '
+            + ServicioId + '?').then((result) => {
+                if (result.value) {
+                    var viewEliminar = document.getElementById("viewEliminar");
+                    viewEliminar.submit();
+                    Swal.fire(
+                        'Eliminación!',
+                        'La Categoria' + ServicioId + 'fue eliminada!.',
+                        'success'
+                    )
+                }
+                else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                        'Cancelado',
+                        'La Categoria no fue eliminada!!!:)',
+                        'error'
+                    )
+                }
+            })
+    }
+
+</script>
