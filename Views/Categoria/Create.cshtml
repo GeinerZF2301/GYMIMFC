@@ -9,7 +9,7 @@
         <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
             Agregar nueva Categoria
         </h3>
-    </div>
+    </div>+
 </div>
 <br />
 <div class="container">
@@ -70,7 +70,7 @@
 <script src="~/js/Utilitarios.js"></script>
 <script>
     function abrirModal() {
-        verModal('Agregar categoria', '¿Desea guardar la categoria?').then((result) => {
+        verModal('Agregar Categoria', '¿Desea guardar la Categoria?').then((result) => {
             if (result.value) {
                 var viewAgregar = document.getElementById("viewAgregar");
                 viewAgregar.submit();

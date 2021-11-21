@@ -1,14 +1,14 @@
-﻿  <!-- Main Sidebar Container -->
-@{
+﻿    <!-- Main Sidebar Container -->
+    @{
     var Usuario = ViewBag.UsuarioId;
     var Perfil = ViewBag.Perfil;
-}
-<aside class="main-sidebar sidebar-dark-cyan elevation-4">
+    }
+    <aside class="main-sidebar sidebar-dark-cyan elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <img src="~/adminlte/dist/img/Logo (2).png" alt=" "
-             class="brand-image img-circle elevation-3"
-             style="opacity: .8">
+                class="brand-image img-circle elevation-3"
+                style="opacity: .8">
         <span class="brand-text font-weight-bolder">GYM IMFC</span>
     </a>
     <!-- Sidebar Menu -->
@@ -33,7 +33,7 @@
 
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Servicios"
-                                   asp-action="Index" class="nav-link">
+                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-stethoscope"></i>
                                     <p>Servicios</p>
                                 </a>
@@ -42,14 +42,14 @@
 
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Categoria"
-                                   asp-action="Index" class="nav-link">
+                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-user-nurse"></i>
                                     <p>Categoria</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Empleado"
-                                   asp-action="Index" class="nav-link">
+                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-user-md"></i>
                                     <p>Empleado</p>
                                 </a>
@@ -57,7 +57,7 @@
 
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Cliente"
-                                   asp-action="Index" class="nav-link">
+                                    asp-action="Index" class="nav-link">
                                     <i class="far fa-ambulance"></i>
                                     <p>Cliente</p>
                                 </a>
@@ -67,7 +67,7 @@
                         {
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Citas"
-                                   asp-action="Index" class="nav-link">
+                                    asp-action="Index" class="nav-link">
                                     <i class="fas fa-person-booth"></i>
                                     <p>Citas</p>
                                 </a>
@@ -90,39 +90,27 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a asp-area="" asp-controller="ConsultaServicio"
-                               asp-action="Index" class="nav-link">
+                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-id-card-alt"></i>
                                 <p>Servicios</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-area="" asp-controller="ConsultaCategoria"
-                               asp-action="Index" class="nav-link">
+                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-address-card"></i>
                                 <p>Categoria</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="fas fa-user-nurse"></i>
-                                <p>Empleado</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="fas fa-users-cog"></i>
-                                <p>Cliente</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="ConsultaCita"
-                               asp-action="Index" class="nav-link">
-                                <i class="fas fa-address-card"></i>
-                                <p>Citas</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="ConsultaCita"
+                            asp-action="Index" class="nav-link">
+                            <i class="fas fa-address-card"></i>
+                            <p>Citas</p>
+                        </a>
+                    </li>
+                </ul>
+                    </li>
             }
 
             @*tipoUsuarioId = 1=Admin 2=Registrador 3=Citas 4=Consultas*@
@@ -142,7 +130,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a asp-area="" asp-controller="TipoUsuarios"
-                               asp-action="Index" class="nav-link">
+                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-user-cog"></i>
                                 <p>Roles</p>
                             </a>
@@ -150,7 +138,7 @@
 
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Usuarios"
-                               asp-action="Index" class="nav-link">
+                                asp-action="Index" class="nav-link">
                                 <i class="fas fa-user-friends"></i>
                                 <p>Usuarios</p>
                             </a>
@@ -185,7 +173,7 @@
                 </li>*@
             <li class="nav-item">
                 <a asp-area="" asp-controller="Login"
-                   asp-action="CerrarSesion" class="nav-link">
+                    asp-action="CerrarSesion" class="nav-link">
                     <i class="fas fa-user-friends"></i>
                     <p>Cerrar sesión</p>
                 </a>
@@ -195,5 +183,5 @@
 
     <!-- /.sidebar-menu -->
     <!-- /.sidebar -->
-</aside>
+    </aside>
 

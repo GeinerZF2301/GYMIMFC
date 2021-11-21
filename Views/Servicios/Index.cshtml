@@ -2,57 +2,62 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    String nombreServicios = ViewBag.Servicios;
+    String nombre= ViewBag.Servicios;
 }
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
-            Lista de Especialidades
+            Lista de los Servicios
         </h3>
     </div>
 </div>
-<div class="container">
-    <form asp-controller="Especialidad" asp-action="Index" method="post" id="frmIndex">
-        <div class="row">
-            <div class="col-md-3 col-lg-3 text-right">
-                <a asp-action="Create" class="btn btn-success fa fa-plus-circle"
-                   style="width: 100%; height:100%;padding:6px;
+<div class="container-fluid">
+    <br />
+    <form asp-controller="Servicios" asp-action="Index" method="post" id="frmIndex">
+        <div class="backgroundWhiteBorder10Padding">
+            <fieldset class="form-group border p-2">
+                <div class="form-group row">
+                    <div class="col-md-2 col-lg-offset-4">
+                        <a asp-action="Create" class="btn btn-success fa fa-plus-circle"
+                           style="width: 100%; height:100%;padding:6px;
                          font-size:larger;color:white;">
-                    Nuevo
-                </a>
-            </div>g
-            <br />
-            <div class="col-md-3 col-lg-3 text-right">
-                <input type="button" value="Generar PDF"
-                       class="btn btn-primary" style="width: 100%;
+                            Nuevo
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" value="Generar PDF"
+                               class="btn btn-primary" style="width: 100%;
                            height:100%;padding:6px;"
-                       onclick="ExportarPDF()" />
-            </div>
-            <div class="col-md-3 colo-lg-3 text-right">
-                <a asp-controller="Home" asp-action="Index"
-                   class="btn btn-info fa fa fa-arrow-circle-left"
-                   style="width: 100%; height:100%;padding:6px;">
-                    Cerrar
-                </a>
-            </div>
-            <div class="col-md-12" style="color:black;"><hr></div>
-        </div>
-        @*fin fila 0*@
+                               onclick="ExportarPDF()" />
+                    </div>
+                    <div class="col-md-2">
+                        <a asp-controller="Home" asp-action="Index"
+                           class="btn btn-info fa fa fa-arrow-circle-left"
+                           style="width: 100%; height:100%;padding:6px;">
+                            Cerrar
+                        </a>
+                    </div>
+                </div>
 
+                <div class="form-group row">
+                    <div class="col-md-4 col-lg-offset-1 text-right">
+                        <label class="col-form-label">Servicios :</label>
+                    </div>
+                    <div class="col-7">
+                        <partial name="_Filter" />
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-3" style="font-size:larger;">
-                <label class="col-form-label">Filtrar por especialidad :</label>
-            </div>
-            <div class="col-9 text-right">
-                <partial name="_Filter" />
-            </div>
+            </fieldset>
         </div>
     </form>
-    @if (Model.Count() > 0)
-    {
-        <div class="backgroundWhiteBorder10Padding">
-            <table class="table table-hover .table-responsive" id="TbEspecialidad">
+</div>
+@if (Model.Count() > 0)
+{
+    <div class="container">
+
+        <fieldset class="form-group border p-2">
+            <table class="table table-hover .table-responsive" id="TbServicios">
                 <thead class="thead-dark">
                     <tr class="table-secondary" id="head">
                         <th>@Html.DisplayNameFor(m => m.ServicioId)</th>
@@ -67,47 +72,45 @@
                         <tr>
                             <td>@Html.DisplayFor(m => item.ServicioId)</td>
                             <td>@Html.DisplayFor(m => item.Nombre)</td>
-                            <td>
-                                @Html.DisplayFor(m => item.Descripcion)
-                            </td>
+                            <td>@Html.DisplayFor(m => item.Descripcion)</td>
                             <td style="width:15%;">
                                 <i class="fa fa-trash btn btn-danger" aria-hidden="true"
-                                   onclick="EliminarEspecialidad(@item.ServicioId)"></i>
+                                   onclick="EliminarServicios(@item.ServicioId)"></i>
                                 <a class="fa fa-info-circle btn btn-primary" aria-hidden="true"
-                                   asp-controller="Especialidad" asp-action="Details"
+                                   asp-controller="Servicios" asp-action="Details"
                                    asp-route-id="@item.ServicioId"></a>
                                 <a class="fa fa-pencil btn btn-info" aria-hidden="true"
-                                   asp-controller="Especialidad" asp-action="Edit"
+                                   asp-controller="Servicios" asp-action="Edit"
                                    asp-route-id="@item.ServicioId"></a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-        </div>
-    }
-    else
-    {
-        <h5 style="color:red;">No se encontraron especialidades!...</h5>
-    }
+        </fieldset>
+    </div>
+}
+else
+{
+    <h5 style="color:red;">No se encontraron los Servicios!...</h5>
+}
 
-</div>
 <form asp-action="exportarPDF" target="_blank"
-      asp-controller="Especialidad"
+      asp-controller="Servicios"
       method="post" id="viewExportarPDF">
     @*solo sirve para ejecutar el actionresult*@
 </form>
 
-<form asp-action="Delete" asp-controller="Especialidad"
+<form asp-action="Delete" asp-controller="Servicios"
       method="post" id="viewEliminar">
-    <input type="hidden" id="txtEspecialidadId"
-           name="EspecialidadId" />
+    <input type="hidden" id="txtEServiciodId"
+           name="ServiciodId" />
 </form>
 
-<form asp-action="Edit" asp-controller="Especialidad"
+<form asp-action="Edit" asp-controller="Servicios"
       method="post" id="viewEditar">
-    <input type="hidden" id="txtEspecialidadId"
-           name="EspecialidadId" />
+    <input type="hidden" id="txtServiciodId"
+           name="ServiciodId" />
 </form>
 
 @*code load https://cdn.jsdelivr.net/npm/sweetalert2@11*@
@@ -115,32 +118,25 @@
 <script src="~/js/Utilitarios.js"></script>
 
 <script>
-    //$(document).ready(function () {
-    //    $('#TbEspecial').DataTable(
-    //        {
-    //            "language": {
-    //                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-    //            }
-    //        });
-    //})
-    function EliminarEspecialidad(EspecialidadId) {
-        document.getElementById("txtEspecialidadId").value = EspecialidadId;
-        verModal('Eliminar Especialidad',
-            '¿Desea eliminar la especialidad '
-            + EspecialidadId + '?').then((result) => {
+
+    function EliminarServicio(ServicioId) {
+        document.getElementById("txtServicioId").value = ServicioId;
+        verModal('Eliminar Servicio',
+            '¿Desea eliminar la Servicio '
+            + ServicioId + '?').then((result) => {
                 if (result.value) {
                     var viewEliminar = document.getElementById("viewEliminar");
                     viewEliminar.submit();
                     Swal.fire(
                         'Eliminación!',
-                        'La especialidad' + EspecialidadId + 'fue eliminada!.',
+                        'El Servicio' + ServicioId + 'fue eliminado!.',
                         'success'
                     )
                 }
                 else if (result.dismiss === Swal.DismissReason.cancel) {
                     Swal.fire(
                         'Cancelado',
-                        'La especialidad no fue eliminada!!!:)',
+                        'El Servicio no fue eliminado!!!:)',
                         'error'
                     )
                 }

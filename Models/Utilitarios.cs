@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using cm = System.ComponentModel;
 using System.IO;
 using System.Linq;
-using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
-using iText.IO.Image;
-using iText.Layout.Properties;
 using System.Security.Cryptography;
 using System.Text;
 using PdfWriter = iText.Kernel.Pdf.PdfWriter;
@@ -16,6 +13,7 @@ using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.IO.Font.Constants;
 using OfficeOpenXml;
+
 
 namespace GYMIMFC.Models
 {
@@ -49,9 +47,11 @@ namespace GYMIMFC.Models
                     Paragraph p1 = new Paragraph(titulo);
                     p1.SetFontSize(20);
                     p1.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                    Image img =
-    new Image(ImageDataFactory.Create(@"D:\Cursos UNA\2021\II Semestre\Programacion III\Clinica\Clinica\wwwroot\imagenes\clinica.jfif"))
-                   .SetTextAlignment(TextAlignment.LEFT);
+                    
+                    //Se supone que debemos meter el logo al PDF
+    //                Image img =
+    //new Image(ImageDataFactory.Create(@"C:\Users\Alfie\Desktop\GYMIMFC\wwwroot\imagenes"))
+    //               .SetTextAlignment(TextAlignment.LEFT);
 
                     //doc.Add(img);
                     doc.Add(p1);

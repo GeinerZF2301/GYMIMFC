@@ -10,12 +10,16 @@ namespace GYMIMFC.Models
     {
         [Key]
         public virtual int idCategoria { get; set; }
-        [Display(Name = "Nombre: ")]
-        [Required]
+        [Display(Name = "ID Categoria: ")]
+        [Required(ErrorMessage = "Debe digitar el ID de la categoria")]
+        
         public virtual string NombreCategoria { get; set; }
-
+        [Display(Name = "Nombre Categoria: ")]
+        [Required(ErrorMessage = "Debe digitar el nombre de la categoria")]
+       
         public virtual string Descripcion { get; set; }
-
+        [Display(Name = "Descripciòn: ")]
+        [Required(ErrorMessage = "Debe digitar la descripciòn de la categoria")]
         public virtual IList<Servicios> Servicios { get; set; }
 
     }

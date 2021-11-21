@@ -8,11 +8,11 @@
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <h3 class="text-light" style="text-align:center;background-color:darkslategray;">
-                Lista de categorias
+                Lista de Categorias
             </h3>
         </div>
     </div>
-    <form asp-controller="Categoria" asp-action="Index" method="post" id="frmFilter">
+    <form asp-controller="Servicios" asp-action="Index" method="post" id="frmFilter">
         <div class="row">
             <div class="col-md-2 col-lg-2 text-right">
                 <a asp-action="Create" class="btn btn-success fa fa-plus-circle"
@@ -21,12 +21,6 @@
                 </a>
             </div>
             <br />
-            @*<div class="col-md-2 col-lg-2 text-right">
-                    <input type="button" value="Imprimir" class="btn btn-primary" onclick="Imprimir()" />
-                </div>
-                <div class="col-md-2 col-lg-2 text-right">
-                    <input type="button" value="Generar PDF" class="btn btn-primary" onclick="ExportarPDF()" />
-                </div>*@
             <div class="col-md-2 colo-lg-2 text-right">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-info fa fa fa-arrow-circle-left"
                    style="width: 100%; height:100%;padding:6px;">
@@ -59,12 +53,12 @@
                             </td>
                             <td style="width:15%;">
                                 <i class="fa fa-trash btn btn-danger" aria-hidden="true"
-                                   onclick="EliminarCategoria(@item.idCategoria)"></i>
+                                   onclick="EliminarEnfermedad(@item.idCategoria)"></i>
                                 <a class="fa fa-info-circle btn btn-primary" aria-hidden="true"
-                                   asp-controller="Categorias" asp-action="Details"
+                                   asp-controller="Enfermedades" asp-action="Details"
                                    asp-route-id="@item.idCategoria"></a>
                                 <a class="fa fa-pencil btn btn-info" aria-hidden="true"
-                                   asp-controller="categorias" asp-action="Edit"
+                                   asp-controller="Enfermedades" asp-action="Edit"
                                    asp-route-id="@item.idCategoria"></a>
                             </td>
                         </tr>
@@ -75,16 +69,16 @@
     }
     else
     {
-        <h5 style="color:red;">No se encontraron Servicios!...</h5>
+        <h5 style="color:red;">No se encontraron los Servicios!...</h5>
     }
 
 </div>
 
-<form asp-action="Delete" asp-controller="Categoria" method="post" id="viewEliminar">
-    <input type="hidden" id="txtCategoriaId" name="CategoriaId" />
+<form asp-action="Delete" asp-controller="Enfermedades" method="post" id="viewEliminar">
+    <input type="hidden" id="txtEnfermendadId" name="EnfermedadId" />
 </form>
-<form asp-action="Edit" asp-controller="Categoria" method="post" id="viewEditar">
-    <input type="hidden" id="txtCategoriaId" name="CategoriaId" />
+<form asp-action="Edit" asp-controller="Enfermedades" method="post" id="viewEditar">
+    <input type="hidden" id="txtEnfermedadId" name="EnfermedadId" />
 </form>
 
 
@@ -101,7 +95,7 @@
             });
     })
 
-    function EliminarServicio(ServicioId) {
+    function EliminarServicios(ServicioId) {
         document.getElementById("txtCategoriaId").value = ServicioId;
         verModal('Eliminar Categoria',
             '¿Desea eliminar la Categoria '
